@@ -2,12 +2,13 @@
 This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. The main purpose of this bot is to serve 1 server only. If you wish to serve multiple servers, you'll need to edit the code to allow that capability.
 
 ## Requirments
-Nodejs is required to be install on your machine before running this bot locally.
+Nodejs is required to be installed on your machine before running this bot locally. Also, your choice of text editor. You will be editing files in this repo. I recommend [VSCode](https://code.visualstudio.com/) if you're just starting out.
 
-### For Windows/Mac:
+### nodeJs For Windows/Mac:
 Download and install [nodejs](https://nodejs.org/en/download/) (version >= 18.0.0)
+Alternatively for Mac, you may install nodeJs via homebrew if you have it.
 
-### For Linux:
+### nodeJs For Linux:
 Follow [these instructions](https://nodejs.org/en/download/package-manager/) for your machine
 
 ## Enable developer mode on discord
@@ -109,7 +110,7 @@ This is not a required step. If you wish to keep things consistent, and want to 
 ![](images/packagename.png)
 
 # Run your bot locally
-It is best to run you bot on your personal machin first to ensure it is working properly after your configuration. To do so, you will want to open a terminal window (Command Prompt, Powersheel, Bash, etc...) and change directory to the folder you set up earlier.
+It is best to run you bot on your personal machin first to ensure it is working properly after your configuration. To do so, you will want to open a terminal window (Command Prompt, Powershell, Bash, etc...) and change directory to the folder you set up earlier.
 
 ## Installation
 While in the directory to the your the root of your bot folder (the file path you copied). Type:
@@ -130,9 +131,12 @@ While in the root folder on your terminal. Type.
 `npm start`
 
 While the bot is running, test to see if you have configured your bot correctly with the following slash command in discord `/settings`
-If you see `#invalid-channel` being listed, that means you did not copy over you channel id correctly.
+If you see `#channel-deleted` being listed, that means you did not copy over you channel id correctly.
 
-Test the bot by pinning and unpinning content. If you come across an issue please let the repo owner know (@SomeDumbFox#1234).
+Test the bot by pinning and unpinning content. If you come across an issue please let the repo owner know (@SomeDumbFox#1234). Once you finished testing locally, you may either:
+
+- Let it continue to run. Running this bot on your machine is probably the best way to ensure it remains running at no additional cost. As long as your PC is on and connected to the internet, the bot stays online. If the bot crashes, you can restart using the `npm start` command. 
+- Use a free (or paid) deployment service to keep your bot up. Keep in mind, free deployments are not reliable as there is no way of knowing how long a free service will remain free.
 
 ## Common errors
 ```
@@ -142,7 +146,7 @@ Error [TokenInvalid]: An invalid token was provided.
   code: 'TokenInvalid'
 }
 ```
-This means the bot token you provided is invalid
+This means the bot token you provided is invalid. If you're not sure if you copied the right value, go back the discord dev portal and reset your bot token. Also, make sure you saved your `app.js` in your text editor.
 
 # Deployment
 Fly.io offers 2 free app deployments on a shared virtual machine. If you are planning to only use this bot for pin management and nothing more, this proves to be a decent service to test out the bot. Otherwise, if you wish to add more commands and interactions with this bot, a paid service of your liking will be the best option.
