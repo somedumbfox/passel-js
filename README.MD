@@ -3,7 +3,7 @@ This is a bot port of [Passel Bot Public](https://github.com/stoir/passel_public
 . I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. 
 
 ## Requirments
-Nodejs is required to be install on your machine before running this bot.
+Nodejs is required to be install on your machine before running this bot locally.
 
 ### For Windows/Mac:
 Download and install [nodejs](https://nodejs.org/en/download/) (version >= 18.0.0)
@@ -67,13 +67,15 @@ This page occasionally doesn't work for some people. The link that is generated 
 
 Replace the 0 after `client_id` with the Application Id on your General Information page.
 
-### Download this repo
+## Download this repo and configure your bot
 Use [this link](https://github.com/somedumbfox/passel-js/archive/refs/tags/v1.0.zip) to download this repo as a zip file.
 Uzip the contents of the file into a folder of your choice. Copy the UNC file path to the folder.
 
 The files you will need to edit are:
 - `./src/app.js`
 - `./src/deploy-commands.js`
+- `./fly.toml` - optional
+- `./package.json` - optional
 
 ### app.js Configuration
 Find the line:
@@ -96,13 +98,27 @@ For each item, you'll need to set it according.
 - `guildId`: This is your server Id. With developer mode enabled, right click your server icon, and select Copy ID. Paste that ID in the quotes for guildId.
 - `token`: This is your bot token. Paste that token within the quotes.
 
+### fly.toml and package.json configuration
+This is not a required step. If you wish to keep things consistent, and want to use a different name that appears on your fly.io (see [deployement](#Deployemnt)) account. Adjust the `name` (`package.json`) and `app` (`fly.toml`) variables in both files to the name of your choosing. Ensure both are all lowercase with no space (IE:`my-bot-name`).
+
+`fly.toml`:
+
+![](images/flyname.png)
+
+`package.json`
+
+![](images/packagename.png)
+
+# Run your bot locally
+It is best to run you bot on your personal machin first to ensure it is working properly after your configuration. To do so, you will want to open a terminal window (Command Prompt, Powersheel, Bash, etc...) and change directory to the folder you set up earlier.
+
 ## Installation
-Open terminal and change your directory to the your the root of your repo folder (the file path you copied).
+While in the directory to the your the root of your bot folder (the file path you copied). Type:
 
 `npm install`
 
 ## Register your bot slash commands
-With the terminal still open on your root folder.
+With the terminal still open on your root folder. Type:
 
 `npm run register`
 
@@ -110,17 +126,81 @@ This command only needs to be run once after configuration. If you add more comm
 changes to the command names, you'll need to run this script again.
 
 ## Running locally
-While in the root folder on your terminal
+While in the root folder on your terminal. Type.
 
 `npm start`
 
-## Deployment
-I don't know yet, heroku free dynos are a thing of the past and many free hosts do not allow apps 
-to run 24 consecutive hours and will require a manual start whenever it is shut down. In due time, if I find anything 
-out, this will likely have to be run locally on a personal machine.
+While the bot is running, test to see if you have configured your bot correctly with the following slash command in discord `/settings`
+If you see `#invalid-channel` being listed, that means you did not copy over you channel id correctly.
 
-This read me will be updated if a viable host is found, but more than likely, will need to be deployed on a
-paid host.
+Test the bot by pinning and unpinning content. If you come across an issue please let the repo owner know (@SomeDumbFox#1234).
+
+## Common errors
+```
+Error [TokenInvalid]: An invalid token was provided.
+    at WebSocketManager.connect ...
+    ...
+  code: 'TokenInvalid'
+}
+```
+This means the bot token you provided is invalid
+
+# Deployment
+Fly.io offers 2 free app deployments on a shared virtual machine. If you are planning to only use this bot for pin management and nothing more, this proves to be a decent service to test out the bot. Otherwise, if you wish to add more commands and interactions with this bot, a paid service of your liking will be the best option.
+
+Go to fly.io and click Get Started. On this page, follow the instructions on installing Fly.io to your machine, and sign up for free. Fly.io does not require a credit card to run apps 24/7, however if you upgrade to a paid service, you can run this app for roughly $2 a month, as well as unlimited free apps. Come back after you have installed fly.io and signed up. Come back here.
+
+## Launch your nodeJS app with fly.io
+On windows, you must be in PowerShell. Other systems, open your terminal and change directory to the root folder of you bot.
+
+While in your bots root directory. Type:
+
+`flyctl auth login` - This will open a web browser to sign in to fly.io. you may close the window when your terminal says you have successfully logged in.
+
+Type:
+
+`flyctl launch`
+
+On the prompts:
+
+`? Would you like to copy its configuration to the new app? (y/N)`
+> Type `y`
+
+`? App Name (leave blank to use an auto-generated name):`
+> Choose a name (numbers/letters only, all lowercase). IE: `my-passel-bot`. You will be given a random name if left blank.
+
+`? Select region:  [Use arrows to move, type to filter]`
+> Select the region closest to you by using the up and down arrow keys. Press Enter on the region you want.
+
+`? Would you like to set up a Postgresql database now? (y/N)`
+> Type `n`. OPTONAL: If you wish to add your own commands, and wish to add a Postgresql database. then you may do so. free database usage is 500 MB in size total.
+
+`? Would you like to deploy now? (y/N)`
+> Type `y`
+
+After that watch your terminal launch your first bot. Once it's launched, check your fly.io dashboard and see if it's running.
+
+## Deploying changes
+If you needed to update your bot with new configurations, once you have saved your files. Go ahead and open your terminal (PowerShell on Windows) and change directory to your bots root folder.
+
+In the terminal, while in your bots root folder. Type:
+
+`flyctl auth login` - Follow directions to login. Close browser when done.
+
+`flyctl deploy`
+
+Watch the app build and deploy, and check your fly.io dashboard to ensure you bot successfully restarted.
+
+## Deleting your app
+If fly.io is not to your liking. You have 2 ways to delete your app.
+
+The first way, and easiest, is to log in your fly.io dashbaord and select the app you want to remove. Go to the settings of the app, and select "Delete app". Follow the prompt and your done.
+
+In your terminal (PowerShell on windows), change directory to your bots root folder. Type:
+
+`flyctl auth login` - Follow directions to login. Close browser when done.
+
+`flyctl delete app-name --yes` - Replace `app-name` with the name of your app in the `fly.toml` file. 
 
 ## FAQ
 > Can I create my own repo without forking this repo so it can be private?

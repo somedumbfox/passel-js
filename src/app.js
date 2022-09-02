@@ -1,4 +1,3 @@
-const express = require("express");
 const path = require('node:path');
 const fs = require('node:fs');
 const { Client, GatewayIntentBits, Collection, EmbedBuilder, Colors } = require('discord.js');
