@@ -21,14 +21,17 @@ Open the Advanced tab. On this page check Developer Mode so it's enabled. That's
 ### Create your application
 Go to the [discord dev portal](https://discord.com/developers) and sign up to become a discord developer.
 In the Applications page select "New Application" on the top right.
+
 ![new app](images/newapplication.png)
 
 Give your application a name. It can be anything you want, this will be the default bots name.
+
 ![name it](images/applicationname.png)
 
 You will be taken to your bots page when you agree to the terms and save. Here you'll land on the General Information tab. On this
 page you will want to take note of your appliaction id. Note: This page holds public Information about your bot, however this bot 
 will be configured to not be public. So it is best to keep this information to yourself and not share it.
+
 ![Application ID](images/generalinfo.png)
 
 ### Create and configure your bot
@@ -45,18 +48,23 @@ and check "PRESENCE INTENT", "SERVER MEMBERS INTENT", and "MESSAGE CONTENT INTEN
 
 ### Generate your bot invite
 Go to OAuth2->URL Generator
+
 ![URL Generator](images/generate.png)
 
 On this page select scopes `bot` and `appliactions.commands`
+
 ![Scopes selected](images/scopes)
 
 Now select `Administrator` for Bot permissions
+
 ![permissions selected](images/perms.png)
 
 Copy and paste the genereated URL at the bottom in your web browser to invite your bot to your server.
 
 This page occasionally doesn't work for some people. The link that is generated is:
+
 `https://discord.com/api/oauth2/authorize?client_id=0&permissions=8&scope=bot%20applications.commands`
+
 Replace the 0 after `client_id` with the Application Id on your General Information page.
 
 ## Configure your bots files
@@ -113,17 +121,21 @@ paid host.
 
 ## FAQ
 > Can I create my own repo without forking this repo so it can be private?
+
 Absolutely. You're also more than welcome to fork the repo if keeping it public is not an issue.
 
 > Can I save my bot token on the repo I made?
+
 Only if your repo is private. Even then it's not recommended to do so. Look into loading your bot token 
 as a configuration file, or as an environment variable instead.
 
 > My bot doesn't seem to work, I made a pin but discord tells me I reached my max.
+
 You'll need to unpin your most recent pin, and repin it for it to take affect.
 This bot only works when the pins list has not reached it's max yet.
 
 > I know my last pin reached my max pins but the bot did nothing?
+
 Ensure your bot is online. If so, check the channel id you pasted for `pinsChannel` is 
 correct and not assigned as a `number`, but as a `'string'`. Also, check to make sure the 
 channel in question is not listed in the `blacklistedChannels` array.
