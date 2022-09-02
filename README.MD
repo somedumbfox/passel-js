@@ -53,7 +53,7 @@ Go to OAuth2->URL Generator
 
 On this page select scopes `bot` and `appliactions.commands`
 
-![Scopes selected](images/scopes)
+![Scopes selected](images/scopes.png)
 
 Now select `Administrator` for Bot permissions
 
