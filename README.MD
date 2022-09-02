@@ -21,10 +21,10 @@ Open the Advanced tab. On this page check Developer Mode so it's enabled. That's
 ### Create your application
 Go to the [discord dev portal](https://discord.com/developers) and sign up to become a discord developer.
 In the Applications page select "New Application" on the top right.
-[new app](images/newapplication.png)
+![new app](images/newapplication.png)
 
 Give your application a name. It can be anything you want, this will be the default bots name.
-[name it](images/applicationname.png)
+![name it](images/applicationname.png)
 
 You will be taken to your bots page when you agree to the terms and save. Here you'll land on the General Information tab. On this
 page you will want to take note of your appliaction id. Note: This page holds public Information about your bot, however this bot 
@@ -45,13 +45,13 @@ and check "PRESENCE INTENT", "SERVER MEMBERS INTENT", and "MESSAGE CONTENT INTEN
 
 ### Generate your bot invite
 Go to OAuth2->URL Generator
-[URL Generator](images/generate.png)
+![URL Generator](images/generate.png)
 
 On this page select scopes `bot` and `appliactions.commands`
-[Scopes selected](images/scopes)
+![Scopes selected](images/scopes)
 
 Now select `Administrator` for Bot permissions
-[permissions selected](images/perms.png)
+![permissions selected](images/perms.png)
 
 Copy and paste the genereated URL at the bottom in your web browser to invite your bot to your server.
 
