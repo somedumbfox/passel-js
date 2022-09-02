@@ -13,8 +13,8 @@ module.exports = {
 		}
 
 		await interaction
-			.reply(`**Archive Channel**: <#${client.pinsChannel}>/n`+
-			       `**Blacklisted Channels**: ${channelMentions.join(', ')}\n`+
+			.reply(`**Archive Channel**: <#${client.pinsChannel}>\n`+
+			       `**Blacklisted Channels**: ${ (channelMentions.length)? `${channelMentions.join(', ')}`: "None"}\n`+
 						 `**${(!client.sendAll) ? 
 								`Archive Mode**: ${(client.lastPinArchive) ? "Oldest Pin unpinned\n" : "Newest Pin unpinned\n"}` : 
 								"**Archive All Pins**: Enabled"}`

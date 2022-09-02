@@ -93,13 +93,17 @@ For each item, you'll need to set it according.
 - `guildId`: This is your server Id. With developer mode enabled, right click your server icon, and select Copy ID. Paste that ID in the quotes for guildId.
 - `token`: This is your bot token. Paste that token within the quotes.
 
+## Download this repo
+Use [this link](https://github.com/somedumbfox/passel-js/archive/refs/heads/main.zip) to download this repo as a zip file.
+Uzip the contents of the file into a folder of your choice. Copy the UNC file path to the folder.
+
 ## Installation
-Open terminal and change your directory to the `src` folder.
+Open terminal and change your directory to the your the root of your repo folder (the file path you copied).
 
 `npm install`
 
 ## Register your bot slash commands
-With the terminal still open on `src`
+With the terminal still open on your root folder.
 
 `npm run register`
 
@@ -107,7 +111,7 @@ This command only needs to be run once after configuration. If you add more comm
 changes to the command names, you'll need to run this script again.
 
 ## Running locally
-While in the `src` folder on your terminal
+While in the root folder on your terminal
 
 `npm start`
 

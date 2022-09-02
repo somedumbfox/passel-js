@@ -4,8 +4,8 @@
     "discord.js": "^14.3.0"
   },
   "scripts": {
-    "start": "node app.js",
-    "register": "node deploy-commands.js"
+    "start": "node ./src/app.js",
+    "register": "node ./src/deploy-commands.js"
   },
   "engines": {
     "npm": ">=8.6.0",
