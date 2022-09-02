@@ -9,7 +9,7 @@ Nodejs is required to be install on your machine before running this bot.
 Download and install [nodejs](https://nodejs.org/en/download/) (version >= 18.0.0)
 
 ### For Linux:
-Follow these instructions for your machine
+Follow (these instructions)[https://nodejs.org/en/download/package-manager/] for your machine
 
 ## Enable developer mode on discord
 Open your discord client and open your user settings.
