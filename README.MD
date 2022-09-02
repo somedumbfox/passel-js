@@ -99,7 +99,7 @@ For each item, you'll need to set it according.
 - `token`: This is your bot token. Paste that token within the quotes.
 
 ### fly.toml and package.json configuration
-This is not a required step. If you wish to keep things consistent, and want to use a different name that appears on your fly.io (see [deployement](#Deployemnt)) account. Adjust the `name` (`package.json`) and `app` (`fly.toml`) variables in both files to the name of your choosing. Ensure both are all lowercase with no space (IE:`my-bot-name`).
+This is not a required step. If you wish to keep things consistent, and want to use a different name that appears on your fly.io (see [deployement](#deployemnt)) account. Adjust the `name` (`package.json`) and `app` (`fly.toml`) variables in both files to the name of your choosing. Ensure both are all lowercase with no space (IE:`my-bot-name`).
 
 `fly.toml`:
 
