@@ -89,7 +89,7 @@ Find the line:
 `/**---------------------------------------Start Configuration------------------------------------------------------------**/`
 
 For each item, you'll need to set it according.
-- `clientI`: This is your appliactionId. Paste that ID within the quotes.
+- `clientId`: This is your appliactionId. Paste that ID within the quotes.
 - `guildId`: This is your server Id. With developer mode enabled, right click your server icon, and select Copy ID. Paste that ID in the quotes for guildId.
 - `token`: This is your bot token. Paste that token within the quotes.
 
