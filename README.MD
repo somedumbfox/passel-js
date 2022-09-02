@@ -2,7 +2,7 @@
 This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. The main purpose of this bot is to serve 1 server only. If you wish to serve multiple servers, you'll need to edit the code to allow that capability.
 
 ## Contents
-- [Requirments](#requirments)
+- [Requirements](#requirements)
 - [Enable developer mode on discord](#enable-developer-mode-on-discord)
 - [Create your discord bot](#create-your-discord-bot)
 - [Download this repo and configure your bot](#download-this-repo-and-configure-your-bot)
@@ -10,7 +10,7 @@ This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to
 - [Deployment](#deployment)
 - [FAQ](#faq)
 
-## Requirments
+## Requirements
 Nodejs is required to be installed on your machine before running this bot locally. Also, your choice of text editor. You will be editing files in this repo. I recommend [VSCode](https://code.visualstudio.com/) if you're just starting out.
 
 ### nodeJs For Windows/Mac:
