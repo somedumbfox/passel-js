@@ -10,5 +10,6 @@
   "engines": {
     "npm": ">=8.6.0",
     "node": ">=18.0.0"
-  }
+  },
+  "name": "passeljs"
 }
