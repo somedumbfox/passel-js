@@ -148,7 +148,7 @@ This means the bot token you provided is invalid
 # Deployment
 Fly.io offers 2 free app deployments on a shared virtual machine. If you are planning to only use this bot for pin management and nothing more, this proves to be a decent service to test out the bot. Otherwise, if you wish to add more commands and interactions with this bot, a paid service of your liking will be the best option.
 
-Go to fly.io and click Get Started. On this page, follow the instructions on installing Fly.io to your machine, and sign up for free. Fly.io does not require a credit card to run apps 24/7, however if you upgrade to a paid service, you can run this app for roughly $2 a month, as well as unlimited free apps. Come back after you have installed fly.io and signed up. Come back here.
+Go to fly.io and click Get Started. On this page, follow the instructions on installing Fly.io to your machine, and sign up for free. Fly.io does not require a credit card to run apps 24/7, however if you upgrade to a paid service, you do get some additonal perks. Come back after you have installed fly.io and signed up. Come back here.
 
 ## Launch your nodeJS app with fly.io
 On windows, you must be in PowerShell. Other systems, open your terminal and change directory to the root folder of you bot.
