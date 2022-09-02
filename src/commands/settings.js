@@ -6,9 +6,15 @@ module.exports = {
 		.setDescription('The configured settings for this bot'),
 	async execute(interaction, client) {
 
+		var channelMentions = []
+
+		for (channelID in client.blacklistedChannels){
+			channelMentions.push(`<#${channelID}>`)
+		}
+
 		await interaction
 			.reply(`**Archive Channel**: <#${client.pinsChannel}>/n`+
-			       `**Blacklisted Channels**: ${client.blacklistedChannels.join(', ')}\n`+
+			       `**Blacklisted Channels**: ${channelMentions.join(', ')}\n`+
 						 `**${(!client.sendAll) ? 
 								`Archive Mode**: ${(client.lastPinArchive) ? "Oldest Pin unpinned\n" : "Newest Pin unpinned\n"}` : 
 								"**Archive All Pins**: Enabled"}`
