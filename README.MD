@@ -1,11 +1,11 @@
 # About
 This is a bot port of [Passel Bot Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js/))
-I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. 
+. I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. 
 
 ## Requirments
 Nodejs is required to be install on your machine before running this bot.
 
-### For windows/Mac:
+### For Windows/Mac:
 Download and install [nodejs](https://nodejs.org/en/download/) (version >= 18.0.0)
 
 ### For Linux:
@@ -67,10 +67,13 @@ This page occasionally doesn't work for some people. The link that is generated 
 
 Replace the 0 after `client_id` with the Application Id on your General Information page.
 
-## Configure your bots files
+### Download this repo
+Use [this link](https://github.com/somedumbfox/passel-js/archive/refs/tags/v1.0.zip) to download this repo as a zip file.
+Uzip the contents of the file into a folder of your choice. Copy the UNC file path to the folder.
+
 The files you will need to edit are:
-- `app.js`
-- `deploy-commands.js`
+- `./src/app.js`
+- `./src/deploy-commands.js`
 
 ### app.js Configuration
 Find the line:
@@ -92,10 +95,6 @@ For each item, you'll need to set it according.
 - `clientId`: This is your appliactionId. Paste that ID within the quotes.
 - `guildId`: This is your server Id. With developer mode enabled, right click your server icon, and select Copy ID. Paste that ID in the quotes for guildId.
 - `token`: This is your bot token. Paste that token within the quotes.
-
-## Download this repo
-Use [this link](https://github.com/somedumbfox/passel-js/archive/refs/heads/main.zip) to download this repo as a zip file.
-Uzip the contents of the file into a folder of your choice. Copy the UNC file path to the folder.
 
 ## Installation
 Open terminal and change your directory to the your the root of your repo folder (the file path you copied).
