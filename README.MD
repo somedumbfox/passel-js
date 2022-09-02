@@ -29,7 +29,7 @@ Give your application a name. It can be anything you want, this will be the defa
 You will be taken to your bots page when you agree to the terms and save. Here you'll land on the General Information tab. On this
 page you will want to take note of your appliaction id. Note: This page holds public Information about your bot, however this bot 
 will be configured to not be public. So it is best to keep this information to yourself and not share it.
-[Application ID](images/generalinfo.png)
+![Application ID](images/generalinfo.png)
 
 ### Create and configure your bot
 Select Bot on the left. On this page you'll see the Build-A-Bot page. Go ahead the select "Add Bot" and select "Yes, dot it".
