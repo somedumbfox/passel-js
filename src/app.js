@@ -132,13 +132,13 @@ client.on('channelPinsUpdate', async (channel, time) => {
 			if (messages.size > 49 && !sendAll) {
 				console.log('Removing Last Pinned Message!')
 				var unpinnedMessage = (lastPinArchive) ? messages.last() : messages.first()
-				channel.messages.unpin(unpinnedMessage)
-				channel.send(`Removing ${(lastPinArchive) ? "last" : "first"} saved pin. See archived pin in: <#${pinsChannel}>`)
 				var embed = []
 				embed.push(buildEmbed(unpinnedMessage))
 				channel.guild.channels.fetch(pinsChannel).then(archiveChannel => {
 					bulkSend(archiveChannel, embed)
 				})
+				channel.send(`Removing ${(lastPinArchive) ? "last" : "first"} saved pin. See archived pin in: <#${pinsChannel}>`)
+				channel.messages.unpin(unpinnedMessage)
 			} else {
 				console.log("Pin Max Not reached")
 			}
