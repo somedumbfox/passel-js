@@ -1,3 +1,6 @@
+# Release branch ignores
+README.MD
+*.png
 # Logs
 logs
 *.log
