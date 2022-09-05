@@ -31,11 +31,11 @@ var errorMessage = null
 
 /**---------------------------------------Start Configuration------------------------------------------------------------**/
 //Paste you discord bot token here
-const token = 'paste_token'
+const token = 'MTAwMjIzNDYxMjQzODgxMDY1Ng.GV8Xit.Mu74eu8b1tl3auErx-5kELqklmuwTG7NdWqpOo'
 //Paste your pins channel as a string
 //discordjs uses "Snowflakes" which are 64 bit signed Integers represented as strings.
 //Pasting as an integer will cause integer collisions
-const pinsChannel = '0'
+const pinsChannel = '215166996101332992'
 //Enter as comma seperated strings IE ['001', '002']
 var blacklistedChannels = []
 //Archival Behavior
