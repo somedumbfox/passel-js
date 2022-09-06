@@ -177,7 +177,7 @@ function buildEmbed(messageToEmbed) {
 			{ name: "Jump", value: messageToEmbed.url, inline: false }
 		)
 	
-	if(setDescription(messageToEmbed.content))
+	if(messageToEmbed.content)
 		e.setDescription(`${messageToEmbed.content}`)
 	if (messageToEmbed.attachments.size > 0) {
 		if (messageToEmbed.attachments.first().contentType.includes("image"))
