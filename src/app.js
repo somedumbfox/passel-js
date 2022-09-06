@@ -1,7 +1,6 @@
 const path = require('node:path');
 const fs = require('node:fs');
 const { Client, GatewayIntentBits, Collection, EmbedBuilder, Colors } = require('discord.js');
-var errorMessage = null
 
 // Author: SomeDumbFox#1234
 // Creator: hyppytyynytyydytys#1010
@@ -31,7 +30,7 @@ var errorMessage = null
 
 /**---------------------------------------Start Configuration------------------------------------------------------------**/
 //Paste you discord bot token here
-const token = 'paste_token'
+const token = process.env.TOKEN || 'paste_token'
 //Paste your pins channel as a string
 //discordjs uses "Snowflakes" which are 64 bit signed Integers represented as strings.
 //Pasting as an integer will cause integer collisions
@@ -152,17 +151,11 @@ client.on('channelPinsUpdate', async (channel, time) => {
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-	if(errorMessage){
-		console.log(`A fatal error has occured:\n${errorMessage}`)
-		errorMessage = null
-	}
 	console.log('Ready!');
 });
 
 client.on("error", (error) =>{
-	errorMessage = error
-	//restart client on fatal error
-	client.login(token);
+	console.log(error)
 })
 
 // Login to Discord with your client's token
@@ -180,10 +173,12 @@ function buildEmbed(messageToEmbed) {
 		.setFooter({ text: `sent in ${messageToEmbed.channel.name} at: ${messageToEmbed.createdAt}` })
 		.setTitle(`message by ${messageToEmbed.author.username}`)
 		.setColor(Colors[Object.keys(Colors)[Math.floor(Math.random() * Object.keys(Colors).length)]])
-		.setDescription(`${messageToEmbed.content}`)
 		.addFields(
 			{ name: "Jump", value: messageToEmbed.url, inline: false }
 		)
+	
+	if(setDescription(messageToEmbed.content))
+		e.setDescription(`${messageToEmbed.content}`)
 	if (messageToEmbed.attachments.size > 0) {
 		if (messageToEmbed.attachments.first().contentType.includes("image"))
 			e.setImage(messageToEmbed.attachments.first().attachment)
