@@ -40,7 +40,7 @@ const pinsChannel = '215166996101332992'
 var blacklistedChannels = []
 //Archival Behavior
 var lastPinArchive = true // set false if first pin gets archived.
-var sendAll = false
+var sendAll = true
 /**----------------------------------------End Configuration-------------------------------------------------------------**/
 
 
@@ -110,8 +110,14 @@ client.on('channelPinsUpdate', async (channel, time) => {
 			if (sendAll && messages.size > 49) {
 				var pinEmbeds = []
 				console.log("unpinning all messages")
+				//build embeds
 				for (message of messages) {
-					pinEmbeds.push(buildEmbed(message[1]))
+					var embeds = buildEmbed(message[1])
+					pinEmbeds = pinEmbeds.concat(embeds)
+				}
+
+				//unpin them all
+				for(message of messages){
 					channel.messages.unpin(message[1])
 				}
 
@@ -134,8 +140,7 @@ client.on('channelPinsUpdate', async (channel, time) => {
 				var unpinnedMessage = (lastPinArchive) ? messages.last() : messages.first()
 				channel.messages.unpin(unpinnedMessage)
 				channel.send(`Removing ${(lastPinArchive) ? "last" : "first"} saved pin. See archived pin in: <#${pinsChannel}>`)
-				var embed = []
-				embed.push(buildEmbed(unpinnedMessage))
+				var embed = buildEmbed(unpinnedMessage)
 				channel.guild.channels.fetch(pinsChannel).then(archiveChannel => {
 					bulkSend(archiveChannel, embed)
 				})
@@ -176,6 +181,8 @@ client.login(token);
  * @returns 
  */
 function buildEmbed(messageToEmbed) {
+	if(messageToEmbed.embeds.length > 0)
+		return messageToEmbed.embeds
 	var e = new EmbedBuilder()
 		.setFooter({ text: `sent in ${messageToEmbed.channel.name} at: ${messageToEmbed.createdAt}` })
 		.setTitle(`message by ${messageToEmbed.author.username}`)
@@ -188,7 +195,7 @@ function buildEmbed(messageToEmbed) {
 		if (messageToEmbed.attachments.first().contentType.includes("image"))
 			e.setImage(messageToEmbed.attachments.first().attachment)
 	}
-	return e
+	return [e]
 
 }
 
