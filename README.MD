@@ -1,5 +1,5 @@
 # About
-This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. The main purpose of this bot is to serve 1 server only. If you wish to serve multiple servers, you'll need to edit the code to allow that capability.
+This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. The main purpose of this bot is to serve 1 server only. If you wish to serve multiple servers, you'll need to edit the code to allow that capability.
 
 ## Contents
 - [Requirements](#requirements)
