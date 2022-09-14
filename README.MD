@@ -1,5 +1,5 @@
 # About
-This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. The main purpose of this bot is to serve 1 server only. If you wish to serve multiple servers, you'll need to edit the code to allow that capability.
+This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. The main purpose of this bot is to serve 1 server only. If you wish to serve multiple servers, you'll need to edit the code to allow that capability.
 
 ## Contents
 - [Requirements](#requirements)
@@ -77,7 +77,7 @@ This page occasionally doesn't work for some people. The link that is generated 
 Replace the 0 after `client_id` with the Application Id on your General Information page.
 
 ## Download this repo and configure your bot
-Use [this link](https://github.com/somedumbfox/passel-js/archive/refs/tags/v1.3.1.zip) to download this repo as a zip file.
+Use [this link](https://github.com/somedumbfox/passel-js/archive/refs/tags/v1.3.2.zip) to download this repo as a zip file.
 Uzip the contents of the file into a folder of your choice. Copy the UNC file path to the folder.
 
 The files you will need to edit are:
