@@ -14,7 +14,7 @@ This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to
 Nodejs is required to be installed on your machine before running this bot locally. Also, your choice of text editor. You will be editing files in this repo. I recommend [VSCode](https://code.visualstudio.com/) if you're just starting out.
 
 ### nodeJs For Windows/Mac:
-Download and install [nodejs](https://nodejs.org/en/download/) (version >= 18.0.0)
+Download and install [nodejs](https://nodejs.org/en/download/) (version >= 16.0.0)
 Alternatively for Mac, you may install nodeJs via homebrew if you have it.
 
 ### nodeJs For Linux:
