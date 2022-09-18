@@ -15,6 +15,7 @@ Nodejs is required to be installed on your machine before running this bot local
 
 ### nodeJs For Windows/Mac:
 Download and install [nodejs](https://nodejs.org/en/download/) (version >= 16.0.0)
+
 Alternatively for Mac, you may install nodeJs via homebrew if you have it.
 
 ### nodeJs For Linux:
