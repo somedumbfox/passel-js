@@ -123,7 +123,9 @@ This is not a required step. If you wish to keep things consistent, and want to 
 It is best to run you bot on your personal machin first to ensure it is working properly after your configuration. To do so, you will want to open a terminal window (Command Prompt, Powershell, Bash, etc...) and change directory to the folder you set up earlier.
 
 ## Installation
-While in the directory to the your the root of your bot folder (the file path you copied). Type:
+While in the directory to the your the root of your bot folder (the file path you copied). IE: (`cd C:\repos\passel-js` where `C:\repos\passel-js` is the folder you extracted the contents of the repo .zip file that was downloaded.
+
+Now type:
 
 `npm install`
 
