@@ -8,8 +8,8 @@
     "register": "node ./src/deploy-commands.js"
   },
   "engines": {
-    "npm": ">=8.6.0",
-    "node": ">=18.0.0"
+    "npm": ">=8.15.0",
+    "node": ">=16.17.0"
   },
   "name": "passeljs"
 }
