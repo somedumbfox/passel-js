@@ -79,7 +79,7 @@ Replace the 0 after `client_id` with the Application Id on your General Informat
 
 ## Download this repo and configure your bot
 Use [this link](https://github.com/somedumbfox/passel-js/archive/refs/tags/v1.3.3.zip) to download this repo as a zip file.
-Uzip the contents of the file into a folder of your choice. Copy the UNC file path to the folder.
+Uzip the contents of the file into a folder of your choice. Keep note of the file path to your bot.
 
 The files you will need to edit are:
 - `./src/app.js`
