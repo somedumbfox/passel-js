@@ -120,7 +120,7 @@ This is not a required step. If you wish to keep things consistent, and want to 
 ![](images/packagename.png)
 
 # Run your bot locally
-It is best to run you bot on your personal machin first to ensure it is working properly after your configuration. To do so, you will want to open a terminal window (Command Prompt, Powershell, Bash, etc...) and change directory to the folder you set up earlier.
+It is best to run you bot on your personal machine first to ensure it is working properly after your configuration. To do so, you will want to open a terminal window (Command Prompt, Powershell, Bash, etc...) and change directory to the folder you set up earlier.
 
 ## Installation
 With your terminal open change to the directory to the your the root folder of your bot IE: `cd C:\repos\passel-js` where `C:\repos\passel-js` is the folder you extracted the contents of the repo .zip file that was downloaded. You are at the root of the folder if you see the `package.json` and `package-lock.json` files.
@@ -161,9 +161,9 @@ Error [TokenInvalid]: An invalid token was provided.
 This means the bot token you provided is invalid. If you're not sure if you copied the right value, go back the discord dev portal and reset your bot token. Also, make sure you saved your `app.js` in your text editor.
 
 # Deployment
-Fly.io offers 2 free app deployments on a shared virtual machine. If you are planning to only use this bot for pin management and nothing more, this proves to be a decent service to test out the bot. Otherwise, if you wish to add more commands and interactions with this bot, a paid service of your liking will be the best option.
+[Fly.io](https://fly.io) offers 2 free app deployments on a shared virtual machine. If you are planning to only use this bot for pin management and nothing more, this proves to be a decent service to test out the bot. Otherwise, if you wish to add more commands and interactions with this bot, a paid service of your liking will be the best option. Also keep in mind there are risks associated in free hosting, and that free hosting is often never guaranteed.
 
-Go to fly.io and click Get Started. On this page, follow the instructions on installing Fly.io to your machine, and sign up for free. Fly.io does not require a credit card to run apps 24/7, however if you upgrade to a paid service, you do get some additonal perks. Come back after you have installed fly.io and signed up. Come back here.
+Go to fly.io and click Get Started. On this page, follow the instructions on installing Fly.io to your machine, and sign up for free. Fly.io does not require a credit card to run apps 24/7, however if you upgrade to a paid service, you do get some additonal perks. Come back after you have installed fly.io and signed up.
 
 ## Launch your nodeJS app with fly.io
 On windows, you must be in PowerShell. Other systems, open your terminal and change directory to the root folder of you bot.
