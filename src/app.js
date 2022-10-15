@@ -30,7 +30,7 @@ const { Client, GatewayIntentBits, Collection, EmbedBuilder, Colors } = require(
 
 /**---------------------------------------Start Configuration------------------------------------------------------------**/
 //Paste you discord bot token here
-const token = process.env.TOKEN || 'paste_token'
+const token = process.env.TOKEN || 'past_token'
 //Paste your pins channel as a string
 //discordjs uses "Snowflakes" which are 64 bit signed Integers represented as strings.
 //Pasting as an integer will cause integer collisions
@@ -115,14 +115,14 @@ client.on('channelPinsUpdate', async (channel, time) => {
 					pinEmbeds = pinEmbeds.concat(embeds)
 				}
 
-				if(pinEmbeds.length == 0){
+				if (pinEmbeds.length == 0) {
 					channel.send(
 						`Tried to build embeds but failed to build any. Can not archive messages.`)
 					return
 				}
 
 				//unpin them all
-				for(message of messages){
+				for (message of messages) {
 					channel.messages.unpin(message[1], "Send All Pin Archive")
 				}
 
@@ -143,11 +143,17 @@ client.on('channelPinsUpdate', async (channel, time) => {
 			if (messages.size > 49 && !sendAll) {
 				console.log('Removing Last Pinned Message!')
 				var unpinnedMessage = (lastPinArchive) ? messages.last() : messages.first()
-				channel.messages.unpin(unpinnedMessage)
-				channel.send(`Removing ${(lastPinArchive) ? "last" : "first"} saved pin. See archived pin in: <#${pinsChannel}>`)
 				var embed = buildEmbed(unpinnedMessage)
+				var videoURL = (unpinnedMessage.attachments.first() &&
+					unpinnedMessage.attachments.first().contentType &&
+					unpinnedMessage.attachments.first().contentType.includes("video")) ?
+					unpinnedMessage.attachments.first().attachment || null : null
 				channel.guild.channels.fetch(pinsChannel).then(archiveChannel => {
-					bulkSend(archiveChannel, embed)
+					do {
+						bulkSend(archiveChannel, embed.splice(0, 10))
+					} while (embed.length > 0)
+					if (videoURL)
+						archiveChannel.send(`Video: ${videoURL}`)
 				})
 				channel.send(`Removing ${(lastPinArchive) ? "last" : "first"} saved pin. See archived pin in: <#${pinsChannel}>`)
 				channel.messages.unpin(unpinnedMessage, "Archive Pin")
@@ -167,7 +173,7 @@ client.once('ready', () => {
 	console.log('Ready!');
 });
 
-client.on("error", (error) =>{
+client.on("error", (error) => {
 	console.log(error)
 })
 
@@ -182,23 +188,31 @@ client.login(token);
  * @returns 
  */
 function buildEmbed(messageToEmbed) {
-	if(messageToEmbed.embeds.length > 0)
-		return messageToEmbed.embeds
-	var e = new EmbedBuilder()
-		.setFooter({ text: `sent in ${messageToEmbed.channel.name} at: ${messageToEmbed.createdAt}` })
-		.setTitle(`message by ${messageToEmbed.author.username}`)
-		.setColor(Colors[Object.keys(Colors)[Math.floor(Math.random() * Object.keys(Colors).length)]])
-		.addFields(
-			{ name: "Jump", value: messageToEmbed.url, inline: false }
-		)
-	
-	if(messageToEmbed.content)
-		e.setDescription(`${messageToEmbed.content}`)
-	if (messageToEmbed.attachments.size > 0) {
-		if (messageToEmbed.attachments.first().contentType.includes("image"))
-			e.setImage(messageToEmbed.attachments.first().attachment)
+	var embeds = []
+	var e = null
+	try {
+		e = new EmbedBuilder()
+			.setFooter({ text: `sent in ${messageToEmbed.channel.name} at: ${messageToEmbed.createdAt}` })
+			.setTitle(`message by ${messageToEmbed.author.username}`)
+			.setColor(Colors[Object.keys(Colors)[Math.floor(Math.random() * Object.keys(Colors).length)]])
+			.addFields(
+				{ name: "Jump", value: messageToEmbed.url, inline: false }
+			)
+
+		if (messageToEmbed.content)
+			e.setDescription(`${messageToEmbed.content}`)
+		if (messageToEmbed.attachments.size > 0) {
+			if (messageToEmbed.attachments.first().contentType.includes("image"))
+				e.setImage(messageToEmbed.attachments.first().attachment)
+		}
+	} catch (error) {
+		console.log(error)
 	}
-	return [e]
+	if (e)
+		embeds.push(e)
+	if (messageToEmbed.embeds.length > 0)
+		messageToEmbed.embeds.forEach(embed => embeds.push(embed))
+	return embeds
 
 }
 
@@ -207,6 +221,6 @@ function buildEmbed(messageToEmbed) {
  * @param {*} channel 
  * @param {*} whatToSend 
  */
-function bulkSend(channel, whatToSend){
-		channel.send({embeds: whatToSend})
+function bulkSend(channel, whatToSend) {
+	channel.send({ embeds: whatToSend })
 }
