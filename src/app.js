@@ -83,9 +83,10 @@ client.on('channelPinsUpdate', async (channel, time) => {
 	console.log('pin event detected')
 	//check if update happened in blacklisted channel. This uses the guild cache as a dirty means to find the channel.
 	for (channelId in blacklistedChannels) {
-		if (channel.id === channelId)
+		if (channel.id === channelId){
 			console.log("encountered pin update in blacklisted channel")
-		return
+			return
+		}
 	}
 
 	//Make sure the pins channel is still available.
