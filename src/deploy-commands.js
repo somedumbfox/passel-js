@@ -6,8 +6,6 @@ const { Routes } = require('discord.js');
 /**---------------------------------------Start Configuration------------------------------------------------------------**/
 //Paste your bot client id
 const clientId = ''
-//Paste your guild id
-const guildId = ''
 //Paste your discord bot token
 const token = ''
 /**----------------------------------------End Configuration-------------------------------------------------------------**/
@@ -25,11 +23,11 @@ for (const file of commandFiles) {
 const rest = new REST({ version: '10' }).setToken(token);
 
 //Comment the following lines out to delete commands
-rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
+rest.put(Routes.applicationCommands(clientId), { body: commands })
 	.then((data) => console.log(`Successfully registered ${data.length} application commands.`))
 	.catch(console.error);
 
 //Uncomment to delete specific commands
-// rest.delete(Routes.applicationGuildCommands(clientId, 'commandId'))
+// rest.delete(Routes.applicationCommands(clientId, 'commandId'))
 // 	.then(() => console.log('Successfully deleted application command'))
 // 	.catch(console.error);

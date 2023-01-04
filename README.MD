@@ -1,5 +1,5 @@
 # About
-This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. The main purpose of this bot is to serve 1 server only. If you wish to serve multiple servers, you'll need to edit the code to allow that capability.
+This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. Running a personal instance of this bot can server multiple servers (up to 100 before verification requirements come into play).
 
 ## Contents
 - [Requirements](#requirements)
@@ -93,11 +93,8 @@ Find the line:
 
 For each item, you'll need to set it accordingly.
 
-- `token`: Set this variable as your discord bot token. If you're not sure, it is the alpha numeric token that looks a bit like this: `MTAxNTEwNjcwMDg0MTMyNDU5NQ.G3QeDO.i2aHpO1buLSh_RSxRkKxPFwMTvghYoKW7IjwBM` 
-- `pinsChannel`: This is the Channel ID of the channel you want pins to be archived in. In discord with developer mode enabled, right click the channel you want to use and select Copy ID. Paste that ID for this variable as a string.
-- `blacklistedChannels`: Using the same process for Pins Channel, paste any Channel Ids that should be black listed from archiving (IE: your mod only channels)
-- `lastPinArchive`: `true/false`. True - the oldest pin is archived. False - the newest pin is archived
-- `sendAll`: `true/false`. True - All pins are purged when the max pins limit is reached (50). False - Only 1 pin is archived when the max pin limit is reached.
+- `token`: Set this variable as your discord bot token. If you're not sure, it is the alpha numeric token that looks a bit like this: `MTAxNTEwNjcwMDg0MTMyNDU5NQ.G3QeDO.i2aHpO1buLSh_RSxRkKxPFwMTvghYoKW7IjwBM`. Leave this setting as `"paste_token"` if you plan on using fly.io with secrets configured.
+- `secondsTaskInterval`: Set the number (in seconds) to change the interval
 
 ### deploy-commands.js Configuration
 Find the line:
@@ -105,8 +102,7 @@ Find the line:
 
 For each item, you'll need to set it according.
 - `clientId`: This is your appliactionId. Paste that ID within the quotes.
-- `guildId`: This is your server Id. With developer mode enabled, right click your server icon, and select Copy ID. Paste that ID in the quotes for guildId.
-- `token`: This is your bot token. Paste that token within the quotes.
+- `token`: This is your bot token. Paste that token within the quotes. This token can be removed from the file once the commands have been registered.
 
 ### fly.toml and package.json configuration
 This is not a required step. If you wish to keep things consistent, and want to use a different name that appears on your fly.io (see [deployment](#deployment)) account. Adjust the `name` (`package.json`) and `app` (`fly.toml`) variables in both files to the name of your choosing. Ensure both are all lowercase with no space (IE:`my-bot-name`).
@@ -137,13 +133,17 @@ With the terminal still open on your root folder. Type:
 This command only needs to be run once after configuration. If you add more commands, or make any 
 changes to the command names, you'll need to run this script again.
 
+If you no longer need to run slash command registrations. You can delete the bot token from the `deploy-commands.js` file.
+
 ## Running locally
 While in the root folder on your terminal. Type.
 
 `npm start`
 
 While the bot is running, test to see if you have configured your bot correctly with the following slash command in discord `/settings`
-If you see `#channel-deleted` being listed, that means you did not copy over you channel id correctly.
+If you see the message that the bot is not configured, that means the bot is running successfully.
+
+Configure you server using `/settings archivechannel #channel`. By default, only one pin will be archived at a time, with the oldest pin being archived.
 
 Test the bot by pinning and unpinning content. If you come across an issue please let the repo owner know (@SomeDumbFox#1234). Once you finished testing locally, you may either:
 
@@ -163,20 +163,52 @@ This means the bot token you provided is invalid. If you're not sure if you copi
 # Deployment
 [Fly.io](https://fly.io) offers 2 free app deployments on a shared virtual machine. If you are planning to only use this bot for pin management and nothing more, this proves to be a decent service to test out the bot. Otherwise, if you wish to add more commands and interactions with this bot, a paid service of your liking will be the best option. Also keep in mind there are risks associated in free hosting, and that free hosting is often never guaranteed.
 
-Go to fly.io and click Get Started. On this page, follow the instructions on installing Fly.io to your machine, and sign up for free. Fly.io does not require a credit card to run apps 24/7, however if you upgrade to a paid service, you do get some additonal perks. Come back after you have installed fly.io and signed up.
+Go to fly.io and click Get Started. On this page, follow the instructions on installing Fly.io to your machine, and sign up for free. Note: Fly.io has the right to restrict free apps whenever they want.
 
-## Launch your nodeJS app with fly.io
+Secondly, if you previously run your app locally, you may want to delete the `node_modules` folder and delete any saved bot tokens in `app.js` and `deploy-commands.js`
+
+## Create your app with fly.io
 On windows, you must be in PowerShell. Other systems, open your terminal and change directory to the root folder of you bot.
 
 While in your bots root directory. Type:
 
 `flyctl auth login` - This will open a web browser to sign in to fly.io. you may close the window when your terminal says you have successfully logged in.
 
-Type:
+Create your app:
+
+`flyctl create app-name`
+
+> Replace `app-name` with your preferred app name. (If you edited fly.toml, use the app name you chose to save some time). The app name must be all lowercase, letters and numbers only.
+
+Create your Volume:
+
+`flyctl vol create data --size 1`
+
+> This will attach a volume to the app you just created. Select the region you want to host your app.
+
+Set your secrets:
+
+`flyctl secrets set TOKEN=bot-token`
+> Replace `bot-token` with your discord bot token
+
+`flyctl secrets set SQL=/data/DB.sqlite`
+
+> Can be copied a pasted. No need to change this value. You can rename `DB.sqlite` if you want to.
+`flyctl secrets set SQLUser=user-name`
+> Replace `user-name` with a made up name of your choice. This will be the DB admin username.
+
+`flyctl secrets set SQLPass=password`
+> Replace `password` with a secure password of your own. This is the DB Admin password.
+
+`flyctl secrets set TASKINTERVAL=600`
+> Optional for RSS feed checks. If you plan on using this feature set this number in seconds to how often you want the bot to check for new content. IE: Every 600 seconds (10 minutes)
+
+Deploy your app for the first time:
 
 `flyctl launch`
+> The apps will automatically launch using the fly.toml file you edited. The region entered earlier will be used for the application.
 
-On the prompts:
+If you see any prompts:
 
 `? Would you like to copy its configuration to the new app? (y/N)`
 > Type `y`
@@ -188,7 +220,7 @@ On the prompts:
 > Select the region closest to you by using the up and down arrow keys. Press Enter on the region you want.
 
 `? Would you like to set up a Postgresql database now? (y/N)`
-> Type `n`. OPTONAL: If you wish to add your own commands, and wish to add a Postgresql database. then you may do so. free database usage is 500 MB in size total.
+> Type `n`.
 
 `? Would you like to deploy now? (y/N)`
 > Type `y`
