@@ -1,6 +1,12 @@
 const path = require('node:path');
 const fs = require('node:fs');
 const { Client, GatewayIntentBits, Collection, EmbedBuilder, Colors } = require('discord.js');
+const sql = require("./model/database");
+const rssFeed = require("./model/rssFeed")
+const guildSettings = require("./model/guildSetting")
+const { read } = require('@extractus/feed-extractor')
+const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
+const { where } = require('sequelize');
 
 // Author: SomeDumbFox#1234
 // Creator: hyppytyynytyydytys#1010
@@ -27,22 +33,13 @@ const { Client, GatewayIntentBits, Collection, EmbedBuilder, Colors } = require(
 //        Furthermore: the p.sendAll feature described later in the code allows the user to set
 //        Passel so that all pinned messages get sent to the pins archive channel.
 
-
+rssFeed.sync()
+guildSettings.sync()
 /**---------------------------------------Start Configuration------------------------------------------------------------**/
 //Paste you discord bot token here
-const token = process.env.TOKEN || 'past_token'
-//Paste your pins channel as a string
-//discordjs uses "Snowflakes" which are 64 bit signed Integers represented as strings.
-//Pasting as an integer will cause integer collisions
-const pinsChannel = '0'
-//Enter as comma seperated strings IE ['001', '002']
-var blacklistedChannels = []
-//Archival Behavior
-var lastPinArchive = true // set false if first pin gets archived.
-var sendAll = false
+const token = process.env.TOKEN || 'paste_token'
+var secondsTaskInterval = process.env.TASKINTERVAL || 60
 /**----------------------------------------End Configuration-------------------------------------------------------------**/
-
-
 
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -50,10 +47,10 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 //copy current settings to client
 client.commands = new Collection();
-client.pinsChannel = pinsChannel
-client.blacklistedChannels = blacklistedChannels
-client.lastPinArchive = lastPinArchive
-client.sendAll = sendAll
+// client.pinsChannel = pinsChannel
+// client.blacklistedChannels = blacklistedChannels
+// client.lastPinArchive = lastPinArchive
+// client.sendAll = sendAll
 
 //client commands setup !!REQUIRES SLASH COMMAND REGISTRATION!!
 for (const file of commandFiles) {
@@ -80,16 +77,28 @@ client.on('interactionCreate', async (interaction) => {
 
 //Logic to process on Pin Event
 client.on('channelPinsUpdate', async (channel, time) => {
-	console.log('pin event detected')
-	//check if update happened in blacklisted channel. This uses the guild cache as a dirty means to find the channel.
+	var guildSetting = await guildSettings.findOne({ where: { guildID: channel.guildId } })
+	if (!guildSetting) {
+		console.log(`Settings not configured for guild: ${channel.guildId}`)
+		channel.send("There are no settings configured for this server. use `/settings archivechannel` to start!")
+		return
+	}
+
+	var blacklistedChannels = guildSetting.blackListChannels.split(",")
+	var pinsChannel = guildSetting.archiveChannel
+	var lastPinArchive = guildSetting.lastPinArchive
+	var sendAll = guildSetting.sendAll
+	console.log(`Entering pin event for guild: ${channel.guildId}`)
+	//check if update happened in blacklisted channel.
 	for (channelId in blacklistedChannels) {
-		if (channel.id === channelId){
-			console.log("encountered pin update in blacklisted channel")
+		if (channel.id === channelId) {
+			console.log("Encountered pin update in blacklisted channel")
 			return
 		}
 	}
 
-	//Make sure the pins channel is still available.
+	//Make sure the pins channel is still available. This uses the guild cache as a dirty means to find the channel.
+	//If the pin channel was recently deleted, this can cause an error
 	var isPinsChannelPresent = false
 	var channelList = channel.guild.channels.cache.values()
 	for (item of channelList) {
@@ -109,7 +118,7 @@ client.on('channelPinsUpdate', async (channel, time) => {
 			//when sendAll is on, clear pins and archive all
 			if (sendAll && messages.size > 49) {
 				var pinEmbeds = []
-				console.log("unpinning all messages")
+				console.log("Unpinning all messages")
 				//build embeds
 				for (message of messages) {
 					var embeds = buildEmbed(message[1])
@@ -137,7 +146,7 @@ client.on('channelPinsUpdate', async (channel, time) => {
 				})
 				return
 			} else {
-				console.log("sendAll not enabled or pin max not reached")
+				console.log("Send all requirements not met.")
 			}
 
 			//sendAll not enabled, archive and post single pin when full
@@ -159,8 +168,10 @@ client.on('channelPinsUpdate', async (channel, time) => {
 				channel.send(`Removing ${(lastPinArchive) ? "last" : "first"} saved pin. See archived pin in: <#${pinsChannel}>`)
 				channel.messages.unpin(unpinnedMessage, "Archive Pin")
 			} else {
-				console.log("Pin Max Not reached")
+				console.log("Pin archive requirements not met")
 			}
+
+			console.log(`Exiting pin event for guild: ${channel.guildId}`)
 		}).catch(error => {
 			console.log(error)
 		})
@@ -178,8 +189,39 @@ client.on("error", (error) => {
 	console.log(error)
 })
 
+client.on("guildCreate", (guild) => {
+	//look for a general channel
+	var general = guild.channels.cache.find(channel => channel.name === "general")
+	if(general){
+		general.send("Thank you for adding me! Use `/settings archivechannel` to start!")
+	}
+})
+
+client.on("guildDelete", async (guild) => {
+	var deletedRowsRSS = await rssFeed.destroy({
+		where:{
+			guildId: guild.id
+		}
+	})
+
+	var deletedRowsSettings = await guildSettings.destroy({
+		where:{
+			guildId: guild.id
+		}
+	})
+
+	console.log(`Deleted ${deletedRowsRSS} RSS settings and ${deletedRowsSettings} pin bot settings for ${guild.id}`)
+})
+
 // Login to Discord with your client's token
 client.login(token);
+
+
+
+//Scheduled Tasks
+const task = new Task('simple task', () => { checkFeeds() })
+const job = new SimpleIntervalJob({ seconds: secondsTaskInterval, }, task)
+job.start()
 
 
 //Functions
@@ -224,4 +266,48 @@ function buildEmbed(messageToEmbed) {
  */
 function bulkSend(channel, whatToSend) {
 	channel.send({ embeds: whatToSend })
+}
+
+async function checkFeeds() {
+	job.stop()
+	console.log("Entering RSS Feed Update")
+	var feeds = await rssFeed.findAll()
+
+	if (feeds.length) {
+		feeds.forEach(async feed => {
+			var feedName = feed.feedName
+			var guildId = feed.guildId
+			var channelId = feed.channelId
+			var feedURL = feed.feedURL
+			var lastItemGUID = feed.lastItemGUID
+			var customMessage = feed.customMessage
+			var rss = null
+			console.log(`Checking the ${feedName} feed for guild: ${guildId}`)
+			try{
+				rss = await read(feedURL)
+			}catch(error){
+				console.log(error)
+			}
+			if(rss && rss.entries.length > 0){
+				if(rss.entries[0].id != lastItemGUID){
+					var entry = rss.entries[0]
+					console.log("Entry update found!")
+					await feed.update({
+						lastItemGUID: entry.id
+					})
+					var guild = await client.guilds.fetch(guildId)
+					var channel = await guild.channels.fetch(channelId)
+					channel.send({content: `${(customMessage) ? customMessage +"\n" : "null"}${entry.title}\n${entry.link}`})
+				}else{
+					console.log(`No new entries for ${guildId}:${feedURL}`)
+				}
+			}else{
+				console.log(`No entries for ${guildId}:${feedURL}`)
+			}
+		})
+	}else{
+		console.log("No feeds to check")
+	}
+
+	job.start()
 }
