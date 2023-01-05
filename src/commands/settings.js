@@ -16,6 +16,7 @@ module.exports = {
 			subCommand
 				.setName(SHOW)
 				.setDescription("Show The Settings")
+				.setRequired(true)
 		)
 		.addSubcommand(subCommand =>
 			subCommand
@@ -25,6 +26,7 @@ module.exports = {
 					option
 						.setName("channel")
 						.setDescription("The channel to add/remove")
+						.setRequired(true)
 				)
 		)
 		.addSubcommand(subCommand =>
@@ -35,6 +37,7 @@ module.exports = {
 					option
 						.setName("channel")
 						.setDescription("The channel to add/remove")
+						.setRequired(true)
 				)
 		)
 		.addSubcommand(subCommand =>
@@ -45,6 +48,7 @@ module.exports = {
 					option
 						.setName("set")
 						.setDescription("True: All pinned messages are archived. False: One pin is archived.")
+						.setRequired(true)
 				)
 		)
 		.addSubcommand(subCommand =>
@@ -55,6 +59,7 @@ module.exports = {
 					option
 						.setName("set")
 						.setDescription("True: oldest pinned message is archived. False: newest pinned message is archived.")
+						.setRequired(true)
 				)
 		)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild + PermissionFlagsBits.UseApplicationCommands),
