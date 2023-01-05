@@ -264,7 +264,7 @@ In your terminal (PowerShell on windows), change directory to your bots root fol
 
 `/feed add name url #channel | message` - Adds an RSS feed to listen to for changes. Will announce the newest entry in the specified channel. A custom message can be added to be sent with the new entry. 
 
-`/feed remove name` - Removes a feed that was configured. If the feed was not found, then 0 feeds would be removed. Name is case senstive.
+`/feed delete name` - Removes a feed that was configured. If the feed was not found, then 0 feeds would be removed. Name is case senstive.
 
 ## FAQ
 > Can I create my own repo without forking this repo so it can be private?
