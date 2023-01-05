@@ -194,6 +194,7 @@ Set your secrets:
 `flyctl secrets set SQL=/data/DB.sqlite`
 
 > Can be copied a pasted. No need to change this value. You can rename `DB.sqlite` if you want to.
+
 `flyctl secrets set SQLUser=user-name`
 > Replace `user-name` with a made up name of your choice. This will be the DB admin username.
 
