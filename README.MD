@@ -289,6 +289,12 @@ Ensure your bot is online. If so, check your pin settings `/settings show`. If a
 
 By defualt server owners can veiw all commands. However, a user must have both "Manage Server" and "Use Slash Commands" on their role permissions enabled.
 
+> I would like to add a feature to this bot, or suggest one. How would I do that?
+
+2 ways, if you're a developer that wants to make a public improvement, simply fork this repo, make your changes on the fork, and submit a pull request to make it official. I'll review and accept the feature update if it proves to be useful.
+
+The other way, submit a new [issue](https://github.com/somedumbfox/passel-js/issues) with the "enhancement" label describing the feature you want. If well recieved, I'll go ahead and implement it.
+
 > What data is collected when using this app?
 
 PasselJs only saves provided configuration data for each server it joins (server id, and channel ids for pins and ignorelist, and rss feeds) to a local database for persistent memory during app updates. PasselJs does not save any message or pin history. PasselJs does not communicate with any third party apps or services. When PasselJs is kicked or removed from integrations in a server, any configuration saved for that server is immediately removed.
