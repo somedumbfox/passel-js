@@ -60,6 +60,7 @@ module.exports = {
     var options = interaction.options._hoistedOptions
     try {
       switch (subCommand) {
+        //add a new feed to the database for this guild
         case ADD:
           var name = options[0].value
           var url = options[1].value
@@ -75,6 +76,8 @@ module.exports = {
           })
           await makeReply(interaction, "Feed added.")
           break;
+
+        //remove the feed with the name provided
         case REMOVE:
           var feedName = options[0].value
           var recordsRemoved = 0
@@ -94,6 +97,9 @@ module.exports = {
           }
           await makeReply(interaction, `Removed ${recordsRemoved} settings.`)
           break;
+        
+        //show feeds configured for this server.
+        //TODO: Interactive embed for feeds greater than 25
         case SHOW:
           var embed = new EmbedBuilder();
           embed.setTitle("Current Feeds")
