@@ -8,6 +8,7 @@ This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to
 - [Download this repo and configure your bot](#download-this-repo-and-configure-your-bot)
 - [Run your bot locally](#run-your-bot-locally)
 - [Deployment](#deployment)
+- [Available Commands](#available-commands)
 - [FAQ](#faq)
 
 ## Requirements
@@ -78,7 +79,7 @@ This page occasionally doesn't work for some people. The link that is generated 
 Replace the 0 after `client_id` with the Application Id on your General Information page.
 
 ## Download this repo and configure your bot
-Use [this link](https://github.com/somedumbfox/passel-js/archive/refs/tags/v2.0.1.zip) to download this repo as a zip file.
+Use [this link](https://github.com/somedumbfox/passel-js/archive/refs/tags/v2.0.2.zip) to download this repo as a zip file.
 Uzip the contents of the file into a folder of your choice. Keep note of the file path to your bot.
 
 The files you will need to edit are:
@@ -249,6 +250,21 @@ In your terminal (PowerShell on windows), change directory to your bots root fol
 `flyctl auth login` - Follow directions to login. Close browser when done.
 
 `flyctl delete app-name --yes` - Replace `app-name` with the name of your app in the `fly.toml` file. 
+
+## Available Commands
+`/settings archivechannel #channel` - Sets the channel used to archive pins.
+
+`/settings ignorelist #channel` - Add/Removes a channel to the ignore list. Channels in the list will not have pins archived.
+
+`/settings sendall true/flase` - Change the send all behavior. True will remove all pins from the pins list in a channel. False will remove one pin.
+
+`/settings lastpin true/false` - Change the single pin arvhive behavior. True will remove the oldest pin. False will remove the newest pin.
+
+`/settings show` - Shows the current configuration of the pin bot for your server.
+
+`/feed add name url #channel | message` - Adds an RSS feed to listen to for changes. Will announce the newest entry in the specified channel. A custom message can be added to be sent with the new entry. 
+
+`/feed remove name` - Removes a feed that was configured. If the feed was not found, then 0 feeds would be removed. Name is case senstive.
 
 ## FAQ
 > Can I create my own repo without forking this repo so it can be private?
