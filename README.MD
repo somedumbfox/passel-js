@@ -258,7 +258,7 @@ In your terminal (PowerShell on windows), change directory to your bots root fol
 
 `/settings sendall true/flase` - Change the send all behavior. True will remove all pins from the pins list in a channel. False will remove one pin.
 
-`/settings lastpin true/false` - Change the single pin arvhive behavior. True will remove the oldest pin. False will remove the newest pin.
+`/settings lastpin true/false` - Change the single pin archive behavior. True will remove the oldest pin. False will remove the newest pin.
 
 `/settings show` - Shows the current configuration of the pin bot for your server.
 
@@ -287,7 +287,7 @@ Ensure your bot is online. If so, check your pin settings `/settings show`. If a
 
 > I can see all the bot commands, but others only see `/pins`?
 
-By defualt server owners can veiw all commands. However, a user must have both "Manage Server" and "Use Slash Commands" enabled on their role permissions enabled.
+By defualt server owners can veiw all commands. However, a user must have both "Manage Server" and "Use Slash Commands" on their role permissions enabled.
 
 > What data is collected when using this app?
 
