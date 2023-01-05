@@ -283,9 +283,11 @@ This bot only works when the pins list has not reached it's max yet.
 
 > I know my last pin reached my max pins but the bot did nothing?
 
-Ensure your bot is online. If so, check the channel id you pasted for `pinsChannel` is 
-correct and not assigned as a `number`, but as a `'string'`. Also, check to make sure the 
-channel in question is not listed in the `blacklistedChannels` array.
+Ensure your bot is online. If so, check your pin settings `/settings show`. If any channels show up as `#deleted-channel` you may have accidentally removed them by mistake, or removed the bot from vieweing the channel.
+
+> I can see all the bot commands, but others only see `/pins`?
+
+By defualt server owners can veiw all commands. However, a user must have both "Manage Server" and "Use Slash Commands" enabled on their role permissions enabled.
 
 > What data is collected when using this app?
 
