@@ -286,3 +286,7 @@ This bot only works when the pins list has not reached it's max yet.
 Ensure your bot is online. If so, check the channel id you pasted for `pinsChannel` is 
 correct and not assigned as a `number`, but as a `'string'`. Also, check to make sure the 
 channel in question is not listed in the `blacklistedChannels` array.
+
+> What data is collected when using this app?
+
+PasselJs only saves provided configuration data for each server it joins (server id, and channel ids for pins and ignorelist, and rss feeds) to a local database for persistent memory during app updates. PasselJs does not save any message or pin history. PasselJs does not communicate with any third party apps or services. When PasselJs is kicked or removed from integrations in a server, any configuration saved for that server is immediately removed.
