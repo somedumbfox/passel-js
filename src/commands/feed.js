@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
 const { where } = require('sequelize');
 const rssFeed = require('../model/rssFeed')
 
@@ -54,7 +54,7 @@ module.exports = {
       subCommand
         .setName(SHOW)
         .setDescription("Show server feeds. Can only display 25.")
-    ),
+    ).setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild + PermissionFlagsBits.UseApplicationCommands),
   async execute(interaction, client) {
     var subCommand = interaction.options._subcommand
     var options = interaction.options._hoistedOptions
