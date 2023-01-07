@@ -1,6 +1,6 @@
 ![Passel JS](images/passel-js.jpeg)
 # About
-This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. Running a personal instance of this bot can server multiple servers (up to 100 before verification requirements come into play).
+This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. Running a personal instance of this bot can serve multiple servers (up to 100 before verification requirements come into play).
 
 ## Contents
 - [Requirements](#requirements)
