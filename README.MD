@@ -259,7 +259,7 @@ In your terminal (PowerShell on windows), change directory to your bots root fol
 
 `/settings sendall true/flase` - Change the send all behavior. True will remove all pins from the pins list in a channel. False will remove one pin.
 
-`/settings lastpin true/false` - Change the single pin arvhive behavior. True will remove the oldest pin. False will remove the newest pin.
+`/settings lastpin true/false` - Change the single pin archive behavior. True will remove the oldest pin. False will remove the newest pin.
 
 `/settings show` - Shows the current configuration of the pin bot for your server.
 
@@ -284,9 +284,17 @@ This bot only works when the pins list has not reached it's max yet.
 
 > I know my last pin reached my max pins but the bot did nothing?
 
-Ensure your bot is online. If so, check the channel id you pasted for `pinsChannel` is 
-correct and not assigned as a `number`, but as a `'string'`. Also, check to make sure the 
-channel in question is not listed in the `blacklistedChannels` array.
+Ensure your bot is online. If so, check your pin settings `/settings show`. If any channels show up as `#deleted-channel` you may have accidentally removed them by mistake, or removed the bot from vieweing the channel.
+
+> I can see all the bot commands, but others only see `/pins`?
+
+By defualt server owners can veiw all commands. However, a user must have both "Manage Server" and "Use Slash Commands" on their role permissions enabled.
+
+> I would like to add a feature to this bot, or suggest one. How would I do that?
+
+2 ways, if you're a developer that wants to make a public improvement, simply fork this repo, make your changes on the fork, and submit a pull request to make it official. I'll review and accept the feature update if it proves to be useful.
+
+The other way, submit a new [issue](https://github.com/somedumbfox/passel-js/issues) with the "enhancement" label describing the feature you want. If well recieved, I'll go ahead and implement it.
 
 > What data is collected when using this app?
 
