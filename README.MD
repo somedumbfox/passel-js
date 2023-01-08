@@ -3,6 +3,7 @@
 This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. Running a personal instance of this bot can serve multiple servers (up to 100 before verification requirements come into play).
 
 ## Contents
+- [Features](#features)
 - [Requirements](#requirements)
 - [Enable developer mode on discord](#enable-developer-mode-on-discord)
 - [Create your discord bot](#create-your-discord-bot)
@@ -11,6 +12,23 @@ This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to
 - [Deployment](#deployment)
 - [Available Commands](#available-commands)
 - [FAQ](#faq)
+
+## Features
+The main feature of this bot is to automatically take pinned messages and display them in an archive text channel of your choice. There are 3 modes of archiving.
+ - Archive most recent pin `/settings lastpin false`
+ - Archive oldest pin (default mode) `/settings lastpin true`
+ - Archive all pins `/settings sendall true`
+
+Archiving the most recent pin will allow the pinned list to act like a sticky pinned menu. So the first 49 pins will always remain present in the pins list. While the pin that was just added is sent to the archive channel.
+
+Archiving the oldest pin will allow the most recent pin to be added to the pins list, and move the oldest pinned message to the archive channel.
+
+Archiving all pins will clear the pins list of all 50 pins and will send them to the archive channel. ***Note***: Pins with video embeds will only show the standard pin embed archive. Video links will not be sent.
+
+### Other Features
+- RSS/ATOM/JSON feed tracker `/feed add`
+
+You can give this bot a link to track an RSS, ATOM, or JSON feed. This is useful for announcing new entries from blog-like websites (wordpress, jekyll, gitlab, etc). The interval in which feeds are checked are configurable by the number of seconds. (IE: 600 seconds for every 10 minutes.)
 
 ## Requirements
 Nodejs is required to be installed on your machine before running this bot locally. Also, your choice of text editor. You will be editing files in this repo. I recommend [VSCode](https://code.visualstudio.com/) if you're just starting out.
