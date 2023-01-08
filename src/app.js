@@ -77,6 +77,7 @@ client.on('interactionCreate', async (interaction) => {
 
 //Logic to process on Pin Event
 client.on('channelPinsUpdate', async (channel, time) => {
+	//get the pin settings based on the guild.
 	var guildSetting = await guildSettings.findOne({ where: { guildID: channel.guildId } })
 	if (!guildSetting) {
 		console.log(`Settings not configured for guild: ${channel.guildId}`)
@@ -189,6 +190,7 @@ client.on("error", (error) => {
 	console.log(error)
 })
 
+//when joining a new guid. notify the server that I need to be set up if a general channel exists.
 client.on("guildCreate", (guild) => {
 	//look for a general channel
 	var general = guild.channels.cache.find(channel => channel.name === "general")
@@ -197,6 +199,7 @@ client.on("guildCreate", (guild) => {
 	}
 })
 
+//remove guild settings when removed
 client.on("guildDelete", async (guild) => {
 	var deletedRowsRSS = await rssFeed.destroy({
 		where:{
@@ -268,6 +271,11 @@ function bulkSend(channel, whatToSend) {
 	channel.send({ embeds: whatToSend })
 }
 
+/**
+ * query the DB for all feeds and check for updates.
+ * send a message when an update is found in the 
+ * appropriate guild server.
+ */
 async function checkFeeds() {
 	job.stop()
 	console.log("Entering RSS Feed Update")
@@ -283,11 +291,16 @@ async function checkFeeds() {
 			var customMessage = feed.customMessage
 			var rss = null
 			console.log(`Checking the ${feedName} feed for guild: ${guildId}`)
+			
+			//grab the feed, Supports RSS, atom, json
 			try{
 				rss = await read(feedURL)
 			}catch(error){
 				console.log(error)
 			}
+
+			//when there are entries present, get the first entry and compare it to the last saved
+			//guid for the feed. If it's different, post the update.
 			if(rss && rss.entries.length > 0){
 				if(rss.entries[0].id != lastItemGUID){
 					var entry = rss.entries[0]

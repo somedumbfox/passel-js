@@ -16,7 +16,6 @@ module.exports = {
 			subCommand
 				.setName(SHOW)
 				.setDescription("Show The Settings")
-				.setRequired(true)
 		)
 		.addSubcommand(subCommand =>
 			subCommand
@@ -87,7 +86,7 @@ module.exports = {
 				await interaction
 					.reply({
 						content: `**Archive Channel**: <#${guildSetting.archiveChannel}>\n` +
-							`**Blacklisted Channels**: ${(channelMentions.length) ? `${channelMentions.join(', ')}` : "None"}\n` +
+							`**Ignored Channels**: ${(channelMentions.length) ? `${channelMentions.join(', ')}` : "None"}\n` +
 							`${(!guildSetting.sendAll) ?
 								`**Archive Mode**: ${(guildSetting.lastPinArchive) ? "Oldest Pin unpinned\n" : "Newest Pin unpinned\n"}` :
 								"**Archive All Pins**: Enabled"}`,
