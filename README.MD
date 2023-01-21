@@ -12,6 +12,7 @@ This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to
 - [Deployment](#deployment)
 - [Available Commands](#available-commands)
 - [FAQ](#faq)
+- [Privacy](#privacy)
 
 ## Features
 The main feature of this bot is to automatically take pinned messages and display them in an archive text channel of your choice. There are 3 modes of archiving.
@@ -322,6 +323,18 @@ Technically, this bot can serve any number of servers (before sharding is a requ
 
 This bot has the MIT license attached to it. That action is permitted. Though not required, credit to [Stoir](https://github.com/stoir) and I would be greatly appreciated.
 
-> What data is collected when using this app?
+# Privacy
 
-PasselJs only saves provided configuration data for each server it joins (server id, and channel ids for pins and ignorelist, and rss feeds) to a local database for persistent memory during app updates. PasselJs does not save any message or pin history. PasselJs does not communicate with any third party apps or services. When PasselJs is kicked or removed from integrations in a server, any configuration saved for that server is immediately removed.
+Passel JS does not collect or save any personal identifiable information when joining servers. Information collected per server is:
+- Guild ID (Server Snowflake)
+- Channel IDs
+
+The information collected are purely used to keep persistant settings during application updates. When the applicaiton leaves a server, all associated information saved with the Guild ID is removed.
+
+Minimum Permissions required to run the application
+- Manage Channels
+- View Messages
+- View Message History
+- Send Messages
+- Embed Links
+- Use External Emoji
