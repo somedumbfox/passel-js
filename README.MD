@@ -335,6 +335,7 @@ The information collected are purely used to keep persistant settings during app
 
 Minimum Permissions required to run the application
 - Manage Channels
+- Manage Threads
 - View Messages
 - View Message History
 - Send Messages
