@@ -339,5 +339,6 @@ Minimum Permissions required to run the application
 - View Messages
 - View Message History
 - Send Messages
+- Attach Files
 - Embed Links
 - Use External Emoji
