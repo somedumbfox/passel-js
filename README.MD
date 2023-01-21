@@ -332,7 +332,7 @@ Passel JS, provided as is from this repo, does not collect or save any personal 
 - Channel IDs
 - RSS feed urls (for the feed checker)
 
-If you (the developer) privide the client application any information that can result in the collection of personal identifiable information, note that you must inform the users of your server(s).
+If you (the developer) provide the client application any information that can result in the collection of personal identifiable information, note that you must inform the users of your server(s).
 
 The information collected are purely used to keep persistant settings during application updates. When the applicaiton leaves a server, all associated information saved with the Guild ID is removed.
 
