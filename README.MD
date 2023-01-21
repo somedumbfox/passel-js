@@ -86,7 +86,7 @@ On this page select scopes `bot` and `appliactions.commands`
 
 ![Scopes selected](images/scopes.png)
 
-Now select `Administrator` for Bot permissions
+Now select `Administrator` for Bot permissions (See [Privacy](#privacy) for minimum requirements)
 
 ![permissions selected](images/perms.png)
 
