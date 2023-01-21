@@ -325,7 +325,9 @@ This bot has the MIT license attached to it. That action is permitted. Though no
 
 # Privacy
 
-Passel JS does not collect or save any personal identifiable information when joining servers. Information collected per server is:
+When running Passel JS, you are subject to Discords [Terms of Service](https://discord.com/developers/docs/policies-and-agreements/developer-terms-of-service) and [Devoloper Policy](https://discord.com/developers/docs/policies-and-agreements/developer-policy) for application developers.
+
+Passel JS, provided as is from this repo, does not collect or save any personal identifiable information when joining servers. Information collected per server is:
 - Guild ID (Server Snowflake)
 - Channel IDs
 
