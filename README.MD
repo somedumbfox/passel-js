@@ -12,6 +12,7 @@ This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to
 - [Deployment](#deployment)
 - [Available Commands](#available-commands)
 - [FAQ](#faq)
+- [Privacy](#privacy)
 
 ## Features
 The main feature of this bot is to automatically take pinned messages and display them in an archive text channel of your choice. There are 3 modes of archiving.
@@ -85,7 +86,7 @@ On this page select scopes `bot` and `appliactions.commands`
 
 ![Scopes selected](images/scopes.png)
 
-Now select `Administrator` for Bot permissions
+Now select `Administrator` for Bot permissions (See [Privacy](#privacy) for minimum requirements)
 
 ![permissions selected](images/perms.png)
 
@@ -314,6 +315,34 @@ By defualt server owners can veiw all commands. However, a user must have both "
 
 The other way, submit a new [issue](https://github.com/somedumbfox/passel-js/issues) with the "enhancement" label describing the feature you want. If well recieved, I'll go ahead and implement it.
 
-> What data is collected when using this app?
+> Am I limited to only 100 servers?
 
-PasselJs only saves provided configuration data for each server it joins (server id, and channel ids for pins and ignorelist, and rss feeds) to a local database for persistent memory during app updates. PasselJs does not save any message or pin history. PasselJs does not communicate with any third party apps or services. When PasselJs is kicked or removed from integrations in a server, any configuration saved for that server is immediately removed.
+Technically, this bot can serve any number of servers (before sharding is a requirement) if given enough resources. However, bots serving more than 100 servers must go through a verification process. Regardless of it being a private bot or not. That verification will likely fail, as Discord reserves the right to determin if the bot can pass, and there is no clear indication what is required by the bot to pass verification.
+
+> I want to use this repos code to add a feature to my personal bot. Is that allowed?
+
+This bot has the MIT license attached to it. That action is permitted. Though not required, credit to [Stoir](https://github.com/stoir) and I would be greatly appreciated.
+
+# Privacy
+
+When running Passel JS, you are subject to Discords [Terms of Service](https://discord.com/developers/docs/policies-and-agreements/developer-terms-of-service) and [Devoloper Policy](https://discord.com/developers/docs/policies-and-agreements/developer-policy) for application developers.
+
+Passel JS, provided as is from this repo, does not collect or save any personal identifiable information when joining servers. Information collected per server is:
+- Guild ID (Server Snowflake)
+- Channel IDs
+- RSS feed urls (for the feed checker)
+
+The information collected are purely used to keep persistant settings during application updates. When the applicaiton leaves a server, all associated information saved with the Guild ID is removed.
+
+If you (the developer) provide the client application any information that can result in the collection of personal identifiable information, note that you must inform the users of your server(s).
+
+
+Minimum Permissions required to run the application
+- Manage Channels
+- Manage Threads
+- View Messages
+- View Message History
+- Send Messages
+- Attach Files
+- Embed Links
+- Use External Emoji
