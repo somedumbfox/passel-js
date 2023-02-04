@@ -310,7 +310,7 @@ async function checkFeeds() {
 					})
 					var guild = await client.guilds.fetch(guildId)
 					var channel = await guild.channels.fetch(channelId)
-					channel.send({content: `${(customMessage) ? customMessage +"\n" : "null"}${entry.title}\n${entry.link}`})
+					channel.send({content: `${(customMessage) ? customMessage +"\n" : ""}${entry.title}\n${entry.link}`})
 				}else{
 					console.log(`No new entries for ${guildId}:${feedURL}`)
 				}
