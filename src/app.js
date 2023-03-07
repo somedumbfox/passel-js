@@ -194,7 +194,7 @@ client.on("error", (error) => {
 client.on("guildCreate", (guild) => {
 	//look for a general channel
 	var general = guild.channels.cache.find(channel => channel.name === "general")
-	if(general){
+	if (general) {
 		general.send("Thank you for adding me! Use `/settings archivechannel` to start!")
 	}
 })
@@ -202,13 +202,13 @@ client.on("guildCreate", (guild) => {
 //remove guild settings when removed
 client.on("guildDelete", async (guild) => {
 	var deletedRowsRSS = await rssFeed.destroy({
-		where:{
+		where: {
 			guildId: guild.id
 		}
 	})
 
 	var deletedRowsSettings = await guildSettings.destroy({
-		where:{
+		where: {
 			guildId: guild.id
 		}
 	})
@@ -223,7 +223,7 @@ client.login(token);
 
 //Scheduled Tasks
 const task = new Task('simple task', () => { checkFeeds() })
-const job = new SimpleIntervalJob({ seconds: secondsTaskInterval, }, task)
+const job = new SimpleIntervalJob({ seconds: secondsTaskInterval, runImmediately: true }, task)
 job.start()
 
 
@@ -277,7 +277,6 @@ function bulkSend(channel, whatToSend) {
  * appropriate guild server.
  */
 async function checkFeeds() {
-	job.stop()
 	console.log("Entering RSS Feed Update")
 	var feeds = await rssFeed.findAll()
 
@@ -291,36 +290,44 @@ async function checkFeeds() {
 			var customMessage = feed.customMessage
 			var rss = null
 			console.log(`Checking the ${feedName} feed for guild: ${guildId}`)
-			
+
 			//grab the feed, Supports RSS, atom, json
-			try{
+			try {
 				rss = await read(feedURL)
-			}catch(error){
+			} catch (error) {
 				console.log(error)
 			}
 
 			//when there are entries present, get the first entry and compare it to the last saved
 			//guid for the feed. If it's different, post the update.
-			if(rss && rss.entries.length > 0){
-				if(rss.entries[0].id != lastItemGUID){
-					var entry = rss.entries[0]
-					console.log("Entry update found!")
+			if (rss && rss.entries.length > 0) {
+				if (rss.entries[0].id != lastItemGUID) {
+					console.log(`Entry update found for ${guildId}:${feedURL}`)
+					var startIndex = rss.entries.findIndex(x => x.id === lastItemGUID)
+					var guild = await client.guilds.fetch(guildId)
+					var channel = await guild.channels.fetch(channelId)
+
+					if (startIndex == -1 || lastItemGUID == null || lastItemGUID === "") {
+						//send only the first entry
+						channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[0].title}\n${rss.entries[0].link}` })
+					} else {
+						//get the oldest new entry, and post from the oldest one forward.
+						for (var i = startIndex; i <= 0; i--) {
+							channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[i].title}\n${rss.entries[i].link}` })
+						}
+					}
+
 					await feed.update({
 						lastItemGUID: entry.id
 					})
-					var guild = await client.guilds.fetch(guildId)
-					var channel = await guild.channels.fetch(channelId)
-					channel.send({content: `${(customMessage) ? customMessage +"\n" : ""}${entry.title}\n${entry.link}`})
-				}else{
+				} else {
 					console.log(`No new entries for ${guildId}:${feedURL}`)
 				}
-			}else{
+			} else {
 				console.log(`No entries for ${guildId}:${feedURL}`)
 			}
 		})
-	}else{
-		console.log("No feeds to check")
+	} else {
+		console.log("No feeds to check for ")
 	}
-
-	job.start()
 }
