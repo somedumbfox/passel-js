@@ -8,6 +8,7 @@ const { read } = require('@extractus/feed-extractor')
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 const { where } = require('sequelize');
 
+
 // Author: SomeDumbFox#1234
 // Creator: hyppytyynytyydytys#1010
 // Created: 26 MAY 2020
@@ -40,6 +41,10 @@ guildSettings.sync()
 const token = process.env.TOKEN || 'paste_token'
 var secondsTaskInterval = process.env.TASKINTERVAL || 60
 /**----------------------------------------End Configuration-------------------------------------------------------------**/
+
+//Scheduled Tasks
+const task = new Task('simple task', () => { checkFeeds() })
+const job = new SimpleIntervalJob({ seconds: secondsTaskInterval, runImmediately: true }, task)
 
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -183,7 +188,8 @@ client.on('channelPinsUpdate', async (channel, time) => {
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-	console.log('Ready!');
+	console.log('Ready! Starting Scheduler.');
+	job.start();
 });
 
 client.on("error", (error) => {
@@ -221,10 +227,6 @@ client.login(token);
 
 
 
-//Scheduled Tasks
-const task = new Task('simple task', () => { checkFeeds() })
-const job = new SimpleIntervalJob({ seconds: secondsTaskInterval, runImmediately: true }, task)
-job.start()
 
 
 //Functions
@@ -312,13 +314,13 @@ async function checkFeeds() {
 						channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[0].title}\n${rss.entries[0].link}` })
 					} else {
 						//get the oldest new entry, and post from the oldest one forward.
-						for (var i = startIndex; i <= 0; i--) {
+						for (var i = startIndex-1; i >= 0; i--) {
 							channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[i].title}\n${rss.entries[i].link}` })
 						}
 					}
 
 					await feed.update({
-						lastItemGUID: entry.id
+						lastItemGUID: rss.entries[0].id
 					})
 				} else {
 					console.log(`No new entries for ${guildId}:${feedURL}`)
