@@ -1,6 +1,6 @@
 ![Passel JS](images/passel-js.jpeg)
 # About
-This is a bot port of [Passel Public](https://github.com/stoir/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. Running a personal instance of this bot can serve multiple servers (up to 100 before verification requirements come into play).
+This is a bot port of [Passel Public](https://github.com/aamunkoi/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. Running a personal instance of this bot can serve multiple servers (up to 100 before verification requirements come into play).
 
 ## Contents
 - [Features](#features)
@@ -321,7 +321,7 @@ Technically, this bot can serve any number of servers (before sharding is a requ
 
 > I want to use this repos code to add a feature to my personal bot. Is that allowed?
 
-This bot has the MIT license attached to it. That action is permitted. Though not required, credit to [Stoir](https://github.com/stoir) and I would be greatly appreciated.
+This bot has the MIT license attached to it. That action is permitted. Though not required, credit to [Aamunkoi](https://github.com/aamunkoi/) and I would be greatly appreciated.
 
 # Privacy
 
