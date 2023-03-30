@@ -239,13 +239,13 @@ function buildEmbed(messageToEmbed) {
 	var embeds = []
 	var e = null
 	try {
-		e = new EmbedBuilder()
-			.setFooter({ text: `sent in ${messageToEmbed.channel.name} at: ${messageToEmbed.createdAt}` })
+		e = EmbedBuilder()
+			.setFooter({ text: `sent in ${messageToEmbed.channel.name}` })
 			.setTitle(`message by ${messageToEmbed.author.username}`)
 			.setColor(Colors[Object.keys(Colors)[Math.floor(Math.random() * Object.keys(Colors).length)]])
 			.addFields(
 				{ name: "Jump", value: messageToEmbed.url, inline: false }
-			)
+			).setTimestamp(messageToEmbed.createdAt)
 
 		if (messageToEmbed.content)
 			e.setDescription(`${messageToEmbed.content}`)
