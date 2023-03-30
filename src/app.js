@@ -239,13 +239,13 @@ function buildEmbed(messageToEmbed) {
 	var embeds = []
 	var e = null
 	try {
-		e = new EmbedBuilder()
-			.setFooter({ text: `sent in ${messageToEmbed.channel.name} at: ${messageToEmbed.createdAt}` })
+		e = EmbedBuilder()
+			.setFooter({ text: `sent in ${messageToEmbed.channel.name}` })
 			.setTitle(`message by ${messageToEmbed.author.username}`)
 			.setColor(Colors[Object.keys(Colors)[Math.floor(Math.random() * Object.keys(Colors).length)]])
 			.addFields(
 				{ name: "Jump", value: messageToEmbed.url, inline: false }
-			)
+			).setTimestamp(messageToEmbed.createdAt)
 
 		if (messageToEmbed.content)
 			e.setDescription(`${messageToEmbed.content}`)
@@ -314,7 +314,7 @@ async function checkFeeds() {
 						channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[0].title}\n${rss.entries[0].link}` })
 					} else {
 						//get the oldest new entry, and post from the oldest one forward.
-						for (var i = startIndex-1; i >= 0; i--) {
+						for (var i = startIndex - 1; i >= 0; i--) {
 							channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[i].title}\n${rss.entries[i].link}` })
 						}
 					}
