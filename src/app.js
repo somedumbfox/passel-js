@@ -314,7 +314,7 @@ async function checkFeeds() {
 						channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[0].title}\n${rss.entries[0].link}` })
 					} else {
 						//get the oldest new entry, and post from the oldest one forward.
-						for (var i = startIndex-1; i >= 0; i--) {
+						for (var i = startIndex - 1; i >= 0; i--) {
 							channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[i].title}\n${rss.entries[i].link}` })
 						}
 					}
