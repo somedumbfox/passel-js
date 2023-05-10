@@ -239,7 +239,7 @@ function buildEmbed(messageToEmbed) {
 	var embeds = []
 	var e = null
 	try {
-		e = EmbedBuilder()
+		e = new EmbedBuilder()
 			.setFooter({ text: `sent in ${messageToEmbed.channel.name}` })
 			.setTitle(`message by ${messageToEmbed.author.username}`)
 			.setColor(Colors[Object.keys(Colors)[Math.floor(Math.random() * Object.keys(Colors).length)]])
