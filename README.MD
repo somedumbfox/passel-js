@@ -1,4 +1,7 @@
 ![Passel JS](images/passel-js.jpeg)
+
+[![Docker](https://github.com/somedumbfox/docker-passel-js/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/somedumbfox/docker-passel-js/actions/workflows/docker-publish.yml)
+
 # About
 This is a bot port of [Passel Public](https://github.com/aamunkoi/passel_public) to use discords official bot api ([discord.js](https://discord.js.org/)). I did this mainly because I was bored and some users that wanted to host passel public wanted a discord js version. Running a personal instance of this bot can serve multiple servers (up to 100 before verification requirements come into play).
 
@@ -10,6 +13,7 @@ This is a bot port of [Passel Public](https://github.com/aamunkoi/passel_public)
 - [Download this repo and configure your bot](#download-this-repo-and-configure-your-bot)
 - [Run your bot locally](#run-your-bot-locally)
 - [Deployment](#deployment)
+- [Docker](#docker)
 - [Available Commands](#available-commands)
 - [FAQ](#faq)
 - [Privacy](#privacy)
@@ -188,6 +192,8 @@ Go to fly.io and click Get Started. On this page, follow the instructions on ins
 
 Secondly, if you previously run your app locally, you may want to delete the `node_modules` folder and delete any saved bot tokens in `app.js` and `deploy-commands.js`
 
+You can also use a Docker image, that is refreshed nightly, from my automated docker image build.
+
 ## Create your app with fly.io
 On windows, you must be in PowerShell. Other systems, open your terminal and change directory to the root folder of you bot.
 
@@ -269,9 +275,15 @@ In your terminal (PowerShell on windows), change directory to your bots root fol
 
 `flyctl auth login` - Follow directions to login. Close browser when done.
 
-`flyctl delete app-name --yes` - Replace `app-name` with the name of your app in the `fly.toml` file. 
+`flyctl delete app-name --yes` - Replace `app-name` with the name of your app in the `fly.toml` file.
 
-## Available Commands
+# Docker
+
+Docker is a great tool, and allows you to either run images locally or in the cloud. It also allows you to stay up to date by simply updating your image as well. 
+
+Instructions on how to run Passel-JS Using docker coming soon.
+
+# Available Commands
 `/settings archivechannel #channel` - Sets the channel used to archive pins.
 
 `/settings ignorelist #channel` - Add/Removes a channel to the ignore list. Channels in the list will not have pins archived.
