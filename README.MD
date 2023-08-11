@@ -1,5 +1,4 @@
 ![Passel JS](images/passel-js.jpeg)
-
 [![Docker](https://github.com/somedumbfox/docker-passel-js/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/somedumbfox/docker-passel-js/actions/workflows/docker-publish.yml)
 
 # About
@@ -13,7 +12,7 @@ This is a bot port of [Passel Public](https://github.com/aamunkoi/passel_public)
 - [Download this repo and configure your bot](#download-this-repo-and-configure-your-bot)
 - [Run your bot locally](#run-your-bot-locally)
 - [Deployment](#deployment)
-- [Docker](#docker)
+- [Docker Deployment](#docker)
 - [Available Commands](#available-commands)
 - [FAQ](#faq)
 - [Privacy](#privacy)
@@ -37,6 +36,8 @@ You can give this bot a link to track an RSS, ATOM, or JSON feed. This is useful
 
 ## Requirements
 Nodejs is required to be installed on your machine before running this bot locally. Also, your choice of text editor. You will be editing files in this repo. I recommend [VSCode](https://code.visualstudio.com/) if you're just starting out.
+
+**NOTE**: If you plan on using docker deployment, you can skip setup for NodeJS development environment. Instead follow the [Docker Deployment Instructions](https://github.com/somedumbfox/docker-passel-js).
 
 ### nodeJs For Windows/Mac:
 Download and install [nodejs](https://nodejs.org/en/download/) (version >= 16.0.0)
@@ -277,11 +278,11 @@ In your terminal (PowerShell on windows), change directory to your bots root fol
 
 `flyctl delete app-name --yes` - Replace `app-name` with the name of your app in the `fly.toml` file.
 
-# Docker
+# Docker Deployment
 
 Docker is a great tool, and allows you to either run images locally or in the cloud. It also allows you to stay up to date by simply updating your image as well. 
 
-Instructions on how to run Passel-JS Using docker coming soon.
+Passel JS can now be run within a docker container, with relatively minimal setup and no need to setup your computer environment for Node JS. You can view instructions on how to run Passel JS with docker [here](https://github.com/somedumbfox/docker-passel-js)!
 
 # Available Commands
 `/settings archivechannel #channel` - Sets the channel used to archive pins.
