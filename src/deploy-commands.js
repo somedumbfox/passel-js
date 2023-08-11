@@ -5,9 +5,9 @@ const { Routes } = require('discord.js');
 
 /**---------------------------------------Start Configuration------------------------------------------------------------**/
 //Paste your bot client id
-const clientId = ''
+const clientId = process.env.clientId || 'paste_client_id'
 //Paste your discord bot token
-const token = ''
+const token = process.env.TOKEN || 'paste_token'
 /**----------------------------------------End Configuration-------------------------------------------------------------**/
 
 const commands = [];
