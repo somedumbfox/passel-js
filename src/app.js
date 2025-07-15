@@ -96,7 +96,7 @@ client.on('channelPinsUpdate', async (channel, time) => {
 	var sendAll = guildSetting.sendAll
 	console.log(`Entering pin event for guild: ${channel.guildId}`)
 	//check if update happened in blacklisted channel.
-	for (channelId in blacklistedChannels) {
+	for (var channelId in blacklistedChannels) {
 		if (channel.id === channelId) {
 			console.log("Encountered pin update in blacklisted channel")
 			return
@@ -107,7 +107,7 @@ client.on('channelPinsUpdate', async (channel, time) => {
 	//If the pin channel was recently deleted, this can cause an error
 	var isPinsChannelPresent = false
 	var channelList = channel.guild.channels.cache.values()
-	for (item of channelList) {
+	for (var item of channelList) {
 		if (item.id === pinsChannel)
 			isPinsChannelPresent = true
 	}
