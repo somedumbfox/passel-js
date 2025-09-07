@@ -40,6 +40,7 @@ guildSettings.sync()
 //Paste you discord bot token here
 const token = process.env.TOKEN || 'paste_token'
 var secondsTaskInterval = process.env.TASKINTERVAL || 60
+var defaultPinLimit = process.env.PINLIMIT || 249
 /**----------------------------------------End Configuration-------------------------------------------------------------**/
 
 //Scheduled Tasks
@@ -94,6 +95,7 @@ client.on('channelPinsUpdate', async (channel, time) => {
 	var pinsChannel = guildSetting.archiveChannel
 	var lastPinArchive = guildSetting.lastPinArchive
 	var sendAll = guildSetting.sendAll
+	var pinLimit = guildSetting.pinLimit || defaultPinLimit
 	console.log(`Entering pin event for guild: ${channel.guildId}`)
 	//check if update happened in blacklisted channel.
 	for (var channelId in blacklistedChannels) {
@@ -122,7 +124,7 @@ client.on('channelPinsUpdate', async (channel, time) => {
 		channel.messages.fetchPinned().then((messages) => {
 
 			//when sendAll is on, clear pins and archive all
-			if (sendAll && messages.size > 49) {
+			if (sendAll && messages.size > defaultPinLimit) {
 				var pinEmbeds = []
 				console.log("Unpinning all messages")
 				//build embeds
@@ -156,7 +158,7 @@ client.on('channelPinsUpdate', async (channel, time) => {
 			}
 
 			//sendAll not enabled, archive and post single pin when full
-			if (messages.size > 49 && !sendAll) {
+			if (messages.size > defaultPinLimit && !sendAll) {
 				console.log('Removing Last Pinned Message!')
 				var unpinnedMessage = (lastPinArchive) ? messages.last() : messages.first()
 				var embed = buildEmbed(unpinnedMessage)
