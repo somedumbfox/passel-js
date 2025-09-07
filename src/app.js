@@ -40,7 +40,7 @@ guildSettings.sync()
 //Paste you discord bot token here
 const token = process.env.TOKEN || 'paste_token'
 var secondsTaskInterval = process.env.TASKINTERVAL || 60
-var defaultPinLimit = process.env.PINLIMIT || 249
+var defaultPinLimit = (process.env.PINLIMIT <= 249) ? process.env.PINLIMIT : 249
 /**----------------------------------------End Configuration-------------------------------------------------------------**/
 
 //Scheduled Tasks
