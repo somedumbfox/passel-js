@@ -119,8 +119,9 @@ Find the line:
 
 For each item, you'll need to set it accordingly.
 
-- `token`: Set this variable as your discord bot token. If you're not sure, it is the alpha numeric token that looks a bit like this: `MTAxNTEwNjcwMDg0MTMyNDU5NQ.G3QeDO.i2aHpO1buLSh_RSxRkKxPFwMTvghYoKW7IjwBM`. Leave this setting as `"paste_token"` if you plan on using fly.io with secrets configured.
-- `secondsTaskInterval`: Set the number (in seconds) to change the interval
+- `token`: Set this variable as your discord bot token. If you're not sure, it is the alpha numeric token that looks a bit like this: `MTAxNTEwNjcwMDg0MTMyNDU5NQ.G3QeDO.i2aHpO1buLSh_RSxRkKxPFwMTvghYoKW7IjwBM`. Leave this setting as `"paste_token"` if you plan on using fly.io with secrets configured. No default is given, must be configured. Looks for environment variable `TOKEN` first.
+- `secondsTaskInterval`: Set the number (in seconds) to change the interval. Default is 60. Looks for environment variable `TASKINTERVAL` first.
+- `pinLimit`: Set the number of pins allowed to be displayed before the bot takes action in archiving them. Default is 249. Number is non-inclusive. If you want 50 pins to remain in list, then you should set the limit to 49. Looks for environment variable `PINLIMIT` first.
 
 ### deploy-commands.js Configuration
 Find the line:
