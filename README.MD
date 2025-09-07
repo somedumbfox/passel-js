@@ -360,3 +360,4 @@ Minimum Permissions required to run the application
 - Attach Files
 - Embed Links
 - Use External Emoji
+- Pin Messages
