@@ -1,12 +1,14 @@
 const path = require('node:path');
 const fs = require('node:fs');
-const { Client, GatewayIntentBits, Collection, EmbedBuilder, Colors } = require('discord.js');
+const { Client, GatewayIntentBits, Collection, EmbedBuilder, Colors, AttachmentBuilder } = require('discord.js');
 const sql = require("./model/database");
 const rssFeed = require("./model/rssFeed")
 const guildSettings = require("./model/guildSetting")
-const { read } = require('@extractus/feed-extractor')
+const { extract } = require('@extractus/feed-extractor')
 const { ToadScheduler, SimpleIntervalJob, Task } = require('toad-scheduler');
 const { where } = require('sequelize');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord.js');
 
 
 // Author: SomeDumbFox#1234
@@ -39,6 +41,7 @@ guildSettings.sync()
 /**---------------------------------------Start Configuration------------------------------------------------------------**/
 //Paste you discord bot token here
 const token = process.env.TOKEN || 'paste_token'
+const clientId = process.env.clientId || 'paste_client_id'
 var secondsTaskInterval = process.env.TASKINTERVAL || 60
 var defaultPinLimit = (process.env.PINLIMIT <= 249) ? process.env.PINLIMIT : 249
 /**----------------------------------------End Configuration-------------------------------------------------------------**/
@@ -190,6 +193,27 @@ client.on('channelPinsUpdate', async (channel, time) => {
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
+	console.log('Registering Commands');
+	const commands = [];
+	const commandsPath = path.join(__dirname, 'commands');
+	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+	for (const file of commandFiles) {
+		const filePath = path.join(commandsPath, file);
+		const command = require(filePath);
+		commands.push(command.data.toJSON());
+	}
+
+	const rest = new REST({ version: '10' }).setToken(token);
+	rest.put(Routes.applicationCommands(clientId), { body: [] })
+		.then((data) => console.log(`Successfully unregistered global commands.`))
+		.catch(console.error);
+	//Comment the following lines out to delete commands
+	rest.put(Routes.applicationCommands(clientId), { body: commands })
+		.then((data) => console.log(`Registered ${data.length} application commands.`))
+		.catch(console.error);
+
+
 	console.log('Ready! Starting Scheduler.');
 	job.start();
 });
@@ -297,41 +321,93 @@ async function checkFeeds() {
 
 			//grab the feed, Supports RSS, atom, json
 			try {
-				rss = await read(feedURL)
+				rss = await extract(feedURL, { normalization: false })
 			} catch (error) {
-				console.log(error)
+				console.error(error)
 			}
 
-			//when there are entries present, get the first entry and compare it to the last saved
-			//guid for the feed. If it's different, post the update.
-			if (rss && rss.entries.length > 0) {
-				if (rss.entries[0].id != lastItemGUID) {
-					console.log(`Entry update found for ${guildId}:${feedURL}`)
-					var startIndex = rss.entries.findIndex(x => x.id === lastItemGUID)
-					var guild = await client.guilds.fetch(guildId)
-					var channel = await guild.channels.fetch(channelId)
+			try {
+				//when there are entries present, get the first entry and compare it to the last saved
+				//guid for the feed. If it's different, post the update.
+				if (rss && rss.items && rss.items.length > 0) {
+					if (rss.items[0].id != lastItemGUID) {
+						console.log(`Entry update found for ${guildId}:${feedURL}`)
+						var startIndex = rss.items.findIndex(x => x.id === lastItemGUID)
+						var guild = await client.guilds.fetch(guildId)
+						var channel = await guild.channels.fetch(channelId)
 
-					if (startIndex == -1 || lastItemGUID == null || lastItemGUID === "") {
-						//send only the first entry
-						channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[0].title}\n${rss.entries[0].link}` })
-					} else {
-						//get the oldest new entry, and post from the oldest one forward.
-						for (var i = startIndex - 1; i >= 0; i--) {
-							channel.send({ content: `${(customMessage) ? customMessage + "\n" : ""}${rss.entries[i].title}\n${rss.entries[i].link}` })
+						if (startIndex == -1 || lastItemGUID == null || lastItemGUID === "") {
+							//send only the first entry
+							var item = rss.items[0]
+							var message = await createRSSMessage(item, customMessage)
+							channel.send(message)
+						} else {
+							//get the oldest new entry, and post from the oldest one forward.
+							for (var i = startIndex - 1; i >= 0; i--) {
+								var item = rss.items[i]
+								var message = await createRSSMessage(item, customMessage)
+								channel.send(message)
+							}
 						}
-					}
 
-					await feed.update({
-						lastItemGUID: rss.entries[0].id
-					})
+						await feed.update({
+							lastItemGUID: rss.items[0].id
+						})
+					} else {
+						console.log(`No new entries for ${guildId}:${feedURL}`)
+					}
 				} else {
-					console.log(`No new entries for ${guildId}:${feedURL}`)
+					console.log(`No entries for ${guildId}:${feedURL}`)
 				}
-			} else {
-				console.log(`No entries for ${guildId}:${feedURL}`)
+			} catch (error) {
+				console.error(error)
 			}
 		})
 	} else {
 		console.log("No feeds to check for ")
 	}
+}
+
+async function getMimeTypeFromUrl(url) {
+	try {
+		const response = await fetch(url, { method: 'HEAD' }); // Use HEAD request for efficiency
+		if (response.ok) {
+			const contentType = response.headers.get('Content-Type');
+			return contentType;
+		} else {
+			console.error(`Failed to fetch URL: ${url}. Status: ${response.status}`);
+			return null;
+		}
+	} catch (error) {
+		console.error(`Error fetching URL: ${url}`, error);
+		return null;
+	}
+}
+
+async function createRSSMessage(item, customMessage = null) {
+	const regex = /[\\\/+]/
+	//build basic message (title and url, empty attachments)
+	var message = {
+		content: `${(customMessage) ? customMessage + "\n" : ""}${item.title}\n${item.url}`,
+		files: []
+	};
+	//Check for feed item attachments
+	if (item.attachments && item.attachments.length > 0) {
+		item.attachments.forEach((item, index) => {
+			var mime_type = item.mime_type || getMimeTypeFromUrl(item.url)
+			if (mime_type && mime_type.includes("audio") || mime_type.includes("image") || mime_type.includes("video")) {
+				var attachment = new AttachmentBuilder(item.url, { name: `attachment_${index}.${mime_type.split(regex).pop()}` })
+				message.files.push(attachment)
+			}
+		})
+	}
+	//See if rssBridge (https://github.com/RSS-Bridge/rss-bridge) feed has any content it could not figure out.
+	if (item._rssbridge && item._rssbridge.id) {
+		var mime_type = await getMimeTypeFromUrl(item._rssbridge.id);
+		if (mime_type && mime_type.includes("audio") || mime_type.includes("image") || mime_type.includes("video")) {
+			var attachment = new AttachmentBuilder(item._rssbridge.id, { name: `attachment.${mime_type.split(regex).pop()}` })
+			message.files.push(attachment)
+		}
+	}
+	return message
 }

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@discordjs/rest": "^1.1.0",
-    "@extractus/feed-extractor": "^6.1.8",
+    "@extractus/feed-extractor": "^7.1.7",
     "discord.js": "^14.3.0",
     "sequelize": "^6.28.0",
     "sqlite3": "^5.1.4",
