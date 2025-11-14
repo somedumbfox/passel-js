@@ -120,16 +120,10 @@ Find the line:
 For each item, you'll need to set it accordingly.
 
 - `token`: Set this variable as your discord bot token. If you're not sure, it is the alpha numeric token that looks a bit like this: `MTAxNTEwNjcwMDg0MTMyNDU5NQ.G3QeDO.i2aHpO1buLSh_RSxRkKxPFwMTvghYoKW7IjwBM`. Leave this setting as `"paste_token"` if you plan on using fly.io with secrets configured. No default is given, must be configured. Looks for environment variable `TOKEN` first.
+- `clientId`: This is your appliactionId. Paste that ID within the quotes.
 - `secondsTaskInterval`: Set the number (in seconds) to change the interval. Default is 60. Looks for environment variable `TASKINTERVAL` first.
 - `pinLimit`: Set the number of pins allowed to be displayed before the bot takes action in archiving them. Default is 249. Number is non-inclusive. If you want 50 pins to remain in list, then you should set the limit to 49. Looks for environment variable `PINLIMIT` first.
-
-### deploy-commands.js Configuration
-Find the line:
-`/**---------------------------------------Start Configuration------------------------------------------------------------**/`
-
-For each item, you'll need to set it according.
-- `clientId`: This is your appliactionId. Paste that ID within the quotes.
-- `token`: This is your bot token. Paste that token within the quotes. This token can be removed from the file once the commands have been registered.
+- `registerCommands` set to true to register global commands on launch Default value is false. Set to true on first launch. Leave false if commands are already registered.
 
 ### fly.toml and package.json configuration
 This is not a required step. If you wish to keep things consistent, and want to use a different name that appears on your fly.io (see [deployment](#deployment)) account. Adjust the `name` (`package.json`) and `app` (`fly.toml`) variables in both files to the name of your choosing. Ensure both are all lowercase with no space (IE:`my-bot-name`).
@@ -220,6 +214,12 @@ Set your secrets:
 `flyctl secrets set TOKEN=bot-token`
 > Replace `bot-token` with your discord bot token
 
+`flyctl secrets set clientId=application-id`
+> Replace `application-id` with your discord application id
+
+`flyctl secrets set registerCommands=true`
+> Use true for first time set up.
+
 `flyctl secrets set SQL=/data/DB.sqlite`
 
 > Can be copied a pasted. No need to change this value. You can rename `DB.sqlite` if you want to.
@@ -256,6 +256,11 @@ If you see any prompts:
 > Type `y`
 
 After that watch your terminal launch your first bot. Once it's launched, check your fly.io dashboard and see if it's running.
+
+While still in the console:
+
+`flyctl secrets unset registerCommands`
+> Unset the secret so registration no longer occurs on app restarts.
 
 ## Deploying changes
 If you needed to update your bot with new configurations, once you have saved your files. Go ahead and open your terminal (PowerShell on Windows) and change directory to your bots root folder.
