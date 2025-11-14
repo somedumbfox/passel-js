@@ -42,6 +42,7 @@ guildSettings.sync()
 //Paste you discord bot token here
 const token = process.env.TOKEN || 'paste_token'
 const clientId = process.env.clientId || 'paste_client_id'
+const registerCommands = process.env.registerCommands || false
 var secondsTaskInterval = process.env.TASKINTERVAL || 60
 var defaultPinLimit = (process.env.PINLIMIT <= 249) ? process.env.PINLIMIT : 249
 /**----------------------------------------End Configuration-------------------------------------------------------------**/
@@ -193,25 +194,27 @@ client.on('channelPinsUpdate', async (channel, time) => {
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-	console.log('Registering Commands');
-	const commands = [];
-	const commandsPath = path.join(__dirname, 'commands');
-	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+	if (registerCommands) {
+		console.log('Registering Commands');
+		const commands = [];
+		const commandsPath = path.join(__dirname, 'commands');
+		const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-	for (const file of commandFiles) {
-		const filePath = path.join(commandsPath, file);
-		const command = require(filePath);
-		commands.push(command.data.toJSON());
+		for (const file of commandFiles) {
+			const filePath = path.join(commandsPath, file);
+			const command = require(filePath);
+			commands.push(command.data.toJSON());
+		}
+
+		const rest = new REST({ version: '10' }).setToken(token);
+		rest.put(Routes.applicationCommands(clientId), { body: [] })
+			.then((data) => console.log(`Successfully unregistered global commands.`))
+			.catch(console.error);
+		//Comment the following lines out to delete commands
+		rest.put(Routes.applicationCommands(clientId), { body: commands })
+			.then((data) => console.log(`Registered ${data.length} application commands.`))
+			.catch(console.error);
 	}
-
-	const rest = new REST({ version: '10' }).setToken(token);
-	rest.put(Routes.applicationCommands(clientId), { body: [] })
-		.then((data) => console.log(`Successfully unregistered global commands.`))
-		.catch(console.error);
-	//Comment the following lines out to delete commands
-	rest.put(Routes.applicationCommands(clientId), { body: commands })
-		.then((data) => console.log(`Registered ${data.length} application commands.`))
-		.catch(console.error);
 
 
 	console.log('Ready! Starting Scheduler.');
