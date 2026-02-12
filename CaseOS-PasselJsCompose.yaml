@@ -1,0 +1,47 @@
+name: vigilant_hidenori
+services:
+  web:
+    cpu_shares: 5
+    command: []
+    deploy:
+      resources:
+        limits:
+          memory: 367001600
+        reservations:
+          devices: []
+    environment:
+      - PINLIMIT=49 # Max limit is 249
+      - SQL=/data/db.sqlite
+      - SQLPass= #Create your SQLite Password
+      - SQLUser= #Create your SQLite Username
+      - TASKINTERVAL=900
+      - TOKEN=
+      - clientId=
+      # - registerCommands=true #Use this variable for the first compose launch. Required between version changes that include slash command updates.
+    image: ghcr.io/somedumbfox/docker-passel-js:main
+    labels:
+      icon: https://raw.githubusercontent.com/somedumbfox/passel-js/8999433d1e2a63d1e4459f31bf5bdf522dd98304/images/passel-js.jpeg
+    restart: always
+    volumes:
+      - type: bind
+        source: /AppData/passelJs # Bind to prefered host location
+        target: /data
+    ports: []
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+    container_name: ""
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: https://raw.githubusercontent.com/somedumbfox/passel-js/8999433d1e2a63d1e4459f31bf5bdf522dd98304/images/passel-js.jpeg
+  index: /
+  is_uncontrolled: false
+  port_map: ""
+  scheme: http
+  store_app_id: vigilant_hidenori
+  title:
+    custom: PasselJs
+    en_us: web
